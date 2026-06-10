@@ -1,0 +1,30 @@
+level: B2
+units:
+  - id: B2.U1
+    title: "Nominalisierung & Nominalstil"
+    can_do: "Use the nominal style common in formal and written German."
+    grammar:
+      - "Nominalization of verbs and adjectives"
+      - "Verbal vs nominal style transformation"
+    vocab_theme: "academic, formal writing"
+  - id: B2.U2
+    title: "Konjunktiv I — indirekte Rede"
+    can_do: "Report what others said using indirect speech."
+    grammar:
+      - "Konjunktiv I forms"
+      - "Indirect speech in journalism"
+    vocab_theme: "media, reporting"
+  - id: B2.U3
+    title: "Erweitertes Passiv & Passiversatz"
+    can_do: "Use advanced passive structures and passive alternatives."
+    grammar:
+      - "Passive with modal verbs"
+      - "Passive alternatives (sich lassen, man, -bar adjectives)"
+    vocab_theme: "technology, society"
+  - id: B2.U4
+    title: "Konnektoren & Argumentation"
+    can_do: "Build nuanced arguments with advanced connectors."
+    grammar:
+      - "Two-part connectors (zwar ... aber, je ... desto, entweder ... oder)"
+      - "Concessive and consecutive clauses"
+    vocab_theme: "debate, environment"

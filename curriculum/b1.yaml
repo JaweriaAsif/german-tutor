@@ -1,0 +1,30 @@
+level: B1
+units:
+  - id: B1.U1
+    title: "Nebensätze & Konnektoren"
+    can_do: "Connect ideas with subordinate clauses and express reasons."
+    grammar:
+      - "Subordinating conjunctions (weil, dass, wenn, obwohl)"
+      - "Verb-final word order in subordinate clauses"
+    vocab_theme: "opinions, reasons"
+  - id: B1.U2
+    title: "Relativsätze"
+    can_do: "Describe people and things with relative clauses."
+    grammar:
+      - "Relative pronouns in all cases"
+      - "Relative clause word order"
+    vocab_theme: "descriptions, work"
+  - id: B1.U3
+    title: "Konjunktiv II — höfliche Bitten & Wünsche"
+    can_do: "Make polite requests and talk about hypothetical situations."
+    grammar:
+      - "Konjunktiv II (würde + infinitive, hätte, wäre, könnte)"
+      - "Conditional sentences"
+    vocab_theme: "wishes, advice, politeness"
+  - id: B1.U4
+    title: "Passiv (Einführung)"
+    can_do: "Describe processes with the passive voice."
+    grammar:
+      - "Werden-passive (present & past)"
+      - "von vs durch"
+    vocab_theme: "processes, news"

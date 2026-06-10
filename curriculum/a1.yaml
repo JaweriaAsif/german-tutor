@@ -1,0 +1,32 @@
+level: A1
+units:
+  - id: A1.U1
+    title: "Begrüßungen & Vorstellung"
+    can_do: "Greet people, introduce yourself, give basic personal info."
+    grammar:
+      - "Personal pronouns (ich, du, er/sie/es, wir, ihr, sie/Sie)"
+      - "Present tense of sein and heißen"
+      - "W-questions (wie, woher, wo)"
+    vocab_theme: "greetings, countries, languages"
+  - id: A1.U2
+    title: "Zahlen & Telefonnummern"
+    can_do: "Use numbers 0-100, exchange phone numbers and ages."
+    grammar:
+      - "Numbers 0-100"
+      - "Present tense of haben"
+    vocab_theme: "numbers, age, contact info"
+  - id: A1.U3
+    title: "Im Café"
+    can_do: "Order food and drinks, ask prices."
+    grammar:
+      - "Definite & indefinite articles (nominative & accusative)"
+      - "Present tense of regular verbs"
+      - "möchten (polite ordering)"
+    vocab_theme: "food, drinks, money"
+  - id: A1.U4
+    title: "Meine Familie"
+    can_do: "Talk about family members and possessions."
+    grammar:
+      - "Possessive articles (mein, dein, sein, ihr)"
+      - "Negation with kein/nicht"
+    vocab_theme: "family, relationships"

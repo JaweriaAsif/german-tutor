@@ -1,0 +1,30 @@
+level: A2
+units:
+  - id: A2.U1
+    title: "Tagesablauf"
+    can_do: "Describe daily routines and tell the time."
+    grammar:
+      - "Separable verbs (aufstehen, einkaufen)"
+      - "Time expressions (um, am, von ... bis)"
+    vocab_theme: "daily routine, times of day"
+  - id: A2.U2
+    title: "Modalverben"
+    can_do: "Express ability, permission, obligation and wishes."
+    grammar:
+      - "Modal verbs (können, müssen, dürfen, wollen, sollen, mögen)"
+      - "Verb-final position with modals"
+    vocab_theme: "hobbies, obligations"
+  - id: A2.U3
+    title: "Der Dativ"
+    can_do: "Use dative for indirect objects and after common prepositions."
+    grammar:
+      - "Dative case of articles and pronouns"
+      - "Dative prepositions (mit, bei, nach, zu, von, aus, seit)"
+    vocab_theme: "places, transport"
+  - id: A2.U5
+    title: "Perfekt — über die Vergangenheit sprechen"
+    can_do: "Talk about past events using the perfect tense."
+    grammar:
+      - "Perfekt with haben vs sein"
+      - "Past participles (regular & common irregular)"
+    vocab_theme: "weekend, travel, activities"
