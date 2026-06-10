@@ -1,0 +1,21 @@
+[project]
+name = "relai-simulator"
+version = "0.1.0"
+description = "Local RELAI simulator harness."
+requires-python = ">=3.11"
+dependencies = [
+    "relai",
+]
+
+[project.scripts]
+relai-simulator-runner = "relai_simulator.runner:main"
+
+[build-system]
+requires = ["setuptools>=69.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv.sources]
+relai = { path = "../../../../../Documents/Github/relai-cli/sdk/python" }

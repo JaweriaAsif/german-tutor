@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+.env
+.agent_sessions/
+.german_tutor/
+
+# RELAI local files
+.relai/config.toml
+.relai/runs/
+.relai/optimizer_runs/
+.relai/memory/
+.relai/optimizer-state/
+.relai/optimizer-scope.json
+.relai/simulator.env
+.relai/tags.json
+.relai/tag-records/
+.codex/skills/relai-*/
+.claude/skills/relai-*/
+
+# RELAI local files
+.relai/memory

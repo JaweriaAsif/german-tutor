@@ -1,0 +1,131 @@
+{
+  "schema_version": "relai.mock_manifest.v1",
+  "items": [
+    {
+      "id": "get_learner_state",
+      "target": "get_learner_state",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Reads learner-specific progress, lesson pointer, error history, and due-vocabulary state from the SQLite store, so tests usually need deterministic fixtures instead of live learner state.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "set_level",
+      "target": "set_level",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Writes the learner's CEFR level into the persistent SQLite store.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "get_next_unit",
+      "target": "get_next_unit",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Depends on the learner's persisted completion state to choose the next curriculum unit.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "get_unit_details",
+      "target": "get_unit_details",
+      "kind": "tool",
+      "final_policy": "do_not_mock",
+      "reason": "Looks up static curriculum content from checked-in YAML data without external services or persistent side effects.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "save_lesson_pointer",
+      "target": "save_lesson_pointer",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Writes resume state for the learner's current lesson into the persistent store.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "cache_lesson",
+      "target": "cache_lesson",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Persists generated lesson JSON so later resume flows replay cached content.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "get_cached_lesson",
+      "target": "get_cached_lesson",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Reads previously generated lesson JSON from the learner's persisted cache.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "record_attempt",
+      "target": "record_attempt",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Writes exercise grading results into the learner history stored in SQLite.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "log_error",
+      "target": "log_error",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Appends learner mistakes to the persistent error log used by later tutoring decisions.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "update_mastery",
+      "target": "update_mastery",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Mutates the learner's per-unit mastery and completion status in SQLite.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "add_vocab",
+      "target": "add_vocab",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Adds new vocabulary cards to the learner's spaced-repetition deck, which mutates persistent state.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "get_due_vocab",
+      "target": "get_due_vocab",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Reads learner-specific spaced-repetition state and due dates from the persistent vocabulary deck.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "review_vocab",
+      "target": "review_vocab",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Grades a vocabulary review and reschedules the learner's card in persistent spaced-repetition storage.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    },
+    {
+      "id": "log_session_summary",
+      "target": "log_session_summary",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Writes a one-line session recap into persistent learner history for future welcome-back prompts.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
+    }
+  ]
+}

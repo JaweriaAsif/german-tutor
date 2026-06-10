@@ -1,0 +1,87 @@
+{
+  "schema_version": "relai.learning_env_context.v1",
+  "agent": {
+    "entrypoint": "src/german_tutor/graph.py",
+    "runner_summary": "The simulator builds the existing LangGraph tutor once, opens the SQLite progress store and checkpoint saver, invokes the compiled graph turn-by-turn with one stable thread_id per run, and converts new LangChain AI/tool messages into RELAI transcript events."
+  },
+  "components": [
+    {
+      "id": "get_next_unit",
+      "import_path": "relai_simulator.adapter:component_get_next_unit",
+      "when_to_use": "Use for regressions where the tutor selects the wrong next unit for a learner's saved progress.",
+      "live_mock_targets": [
+        "get_next_unit"
+      ],
+      "required_mock_targets": [],
+      "input_guidance": "Use FixedComponentInput with no kwargs. Seed TUTOR_LEARNER_ID and TUTOR_DB to a learner record whose completed units already reflect the scenario from the log.",
+      "output_guidance": "Evaluate the returned JSON for the chosen unit id, title, or done flag."
+    },
+    {
+      "id": "get_unit_details",
+      "import_path": "relai_simulator.adapter:component_get_unit_details",
+      "when_to_use": "Use for curriculum lookup bugs where the tutor fetches the wrong objectives, grammar point, or vocab theme for a known unit.",
+      "live_mock_targets": [
+        "get_unit_details"
+      ],
+      "required_mock_targets": [],
+      "input_guidance": "Use FixedComponentInput with kwargs {\"unit_id\": \"A2.U5\"} or the exact unit id from the transcript.",
+      "output_guidance": "Evaluate the returned JSON for the expected curriculum fields such as id, title, objectives, grammar, and vocab theme."
+    },
+    {
+      "id": "get_learner_state",
+      "import_path": "relai_simulator.adapter:component_get_learner_state",
+      "when_to_use": "Use for welcome-back, resume, or personalization bugs tied to the learner summary the specialists read before responding.",
+      "live_mock_targets": [
+        "get_learner_state"
+      ],
+      "required_mock_targets": [],
+      "input_guidance": "Use FixedComponentInput with no kwargs. Point TUTOR_DB at a seeded learner profile that matches the log's level, pointer, due-vocab count, and error history.",
+      "output_guidance": "Evaluate the returned JSON for the learner level, lesson pointer, progress summary, due_vocab count, weak_spots, and last_session fields."
+    },
+    {
+      "id": "get_due_vocab",
+      "import_path": "relai_simulator.adapter:component_get_due_vocab",
+      "when_to_use": "Use for vocabulary-review bugs where the tutor surfaces the wrong due cards or misses cards that should be reviewed.",
+      "live_mock_targets": [
+        "get_due_vocab"
+      ],
+      "required_mock_targets": [],
+      "input_guidance": "Use FixedComponentInput with no kwargs. Seed TUTOR_DB to the learner's spaced-repetition state from the failing log before running the component.",
+      "output_guidance": "Evaluate the returned JSON array for the card ids, lemmas, glosses, and overall due-card count."
+    },
+    {
+      "id": "review_vocab",
+      "import_path": "relai_simulator.adapter:component_review_vocab",
+      "when_to_use": "Use for spaced-repetition scheduling regressions after a learner grades a vocabulary card.",
+      "live_mock_targets": [
+        "review_vocab"
+      ],
+      "required_mock_targets": [],
+      "input_guidance": "Use FixedComponentInput with kwargs {\"card_id\": <existing_card_id>, \"quality\": <0-5>} and a seeded TUTOR_DB containing the relevant card.",
+      "output_guidance": "Evaluate the returned JSON for updated interval, reps, ease, and due_date fields."
+    },
+    {
+      "id": "get_cached_lesson",
+      "import_path": "relai_simulator.adapter:component_get_cached_lesson",
+      "when_to_use": "Use for lesson-resume bugs where cached lesson content is missing, stale, or inconsistent with the learner's saved pointer.",
+      "live_mock_targets": [
+        "get_cached_lesson"
+      ],
+      "required_mock_targets": [],
+      "input_guidance": "Use FixedComponentInput with kwargs {\"unit_id\": \"A2.U5\"} or the resumed unit from the log, and seed TUTOR_DB with the cached lesson JSON for that learner.",
+      "output_guidance": "Evaluate the returned lesson JSON payload or null result for the expected unit and lesson structure."
+    }
+  ],
+  "log_notes": [
+    "User turns appear as user_message events with the raw text passed into the compiled LangGraph tutor.",
+    "Tool calls come from LangChain AIMessage.tool_calls and tool results come from ToolMessage events produced during the same turn.",
+    "The simulator uses one stable LangGraph thread_id per run unless TUTOR_THREAD_ID is set to reuse an existing checkpoint."
+  ],
+  "learning_env_guidance": [
+    "Use FixedInput when the exact learner phrasing or command sequence drives routing, lesson resume, or guardrail behavior.",
+    "Use PersonaInput when the learner's confusion, persistence, or tutoring tone matters more than exact wording.",
+    "Mock stateful SQLite-backed tools by default so agent tests can control learner progress, resume pointers, and vocabulary decks deterministically.",
+    "Use component targets for curriculum lookup, learner-state formatting, lesson-cache, or spaced-repetition regressions that do not need the full routed multi-agent flow.",
+    "Use LLMJudgeEvaluator for level-appropriate tutoring quality and CodeEvaluator for deterministic transcript, route, tool, or JSON output checks."
+  ]
+}

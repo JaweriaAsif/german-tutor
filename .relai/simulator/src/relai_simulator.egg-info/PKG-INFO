@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: relai-simulator
+Version: 0.1.0
+Summary: Local RELAI simulator harness.
+Requires-Python: >=3.11
+Requires-Dist: relai

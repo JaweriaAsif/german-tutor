@@ -1,0 +1,41 @@
+{
+  "schema_version": "relai.runtime_manifest.v1",
+  "env": [
+    {
+      "name": "OPENAI_API_KEY",
+      "required": true,
+      "sensitive": true,
+      "reason": "Required by ChatOpenAI for the router and specialist agents."
+    },
+    {
+      "name": "OPENAI_MODEL",
+      "required": false,
+      "sensitive": false,
+      "reason": "Optional override for the tutor's default model used by the router and specialists."
+    },
+    {
+      "name": "TUTOR_LEARNER_ID",
+      "required": false,
+      "sensitive": false,
+      "reason": "Optional stable learner id for the progress store used during simulation."
+    },
+    {
+      "name": "TUTOR_THREAD_ID",
+      "required": false,
+      "sensitive": false,
+      "reason": "Optional LangGraph thread id when a simulation should reuse an existing checkpointed conversation."
+    }
+  ],
+  "files": [
+    {
+      "path_env": "TUTOR_DB",
+      "required": false,
+      "reason": "Optional SQLite progress database path for the learner store."
+    },
+    {
+      "path_env": "TUTOR_CHECKPOINT_DB",
+      "required": false,
+      "reason": "Optional SQLite checkpoint database path for LangGraph thread state."
+    }
+  ]
+}
