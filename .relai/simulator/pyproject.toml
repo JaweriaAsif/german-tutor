@@ -17,5 +17,3 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.uv.sources]
-relai = { path = "../../../../../Documents/Github/relai-cli/sdk/python" }
