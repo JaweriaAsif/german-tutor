@@ -12,10 +12,13 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "pydantic>=2.0.0",
     "pyyaml>=6.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
 ]
 
 [project.scripts]
 german-tutor = "german_tutor.cli:main"
+german-tutor-web = "german_tutor.web.server:main"
 
 [dependency-groups]
 dev = [

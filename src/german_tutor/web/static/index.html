@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deutsch-Tutor</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Deutsch-Tutor <span class="badge">A1–B2</span></h1>
+    <div class="meta">
+      <label>Learner <input id="learner" value="default" /></label>
+      <span id="summary" class="summary"></span>
+    </div>
+  </header>
+
+  <main id="chat" aria-live="polite"></main>
+
+  <div class="quickbar">
+    <button data-cmd="lesson">📖 Lesson</button>
+    <button data-cmd="resume">↩ Resume</button>
+    <button data-cmd="review">🔁 Vocab review</button>
+    <button data-cmd="quiz">📝 Quiz</button>
+    <button data-cmd="practice">💬 Conversation</button>
+    <button data-cmd="placement">🎯 Placement</button>
+    <button data-cmd="progress">📊 Progress</button>
+  </div>
+
+  <form id="composer">
+    <input id="message" placeholder="Type a message, or ask for a lesson…" autocomplete="off" />
+    <button type="submit" id="send">Send</button>
+  </form>
+
+  <audio id="player"></audio>
+  <script src="/app.js"></script>
+</body>
+</html>
