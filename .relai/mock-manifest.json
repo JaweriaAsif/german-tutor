@@ -6,7 +6,7 @@
       "target": "get_learner_state",
       "kind": "tool",
       "final_policy": "do_not_mock",
-      "reason": "Reads the local learner profile and summary state from SQLite without external side effects.",
+      "reason": "Reads local learner state from the SQLite store without external services or nondeterministic side effects.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -15,7 +15,7 @@
       "target": "set_level",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Writes the learner's CEFR level to persistent SQLite state.",
+      "reason": "Mutates the learner profile by writing a new CEFR level into the SQLite store.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -24,7 +24,7 @@
       "target": "get_next_unit",
       "kind": "tool",
       "final_policy": "do_not_mock",
-      "reason": "Computes the next curriculum unit from local curriculum data and persisted progress.",
+      "reason": "Computes the next curriculum unit from local curriculum data and stored progress only.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -33,7 +33,7 @@
       "target": "get_unit_details",
       "kind": "tool",
       "final_policy": "do_not_mock",
-      "reason": "Reads static curriculum content from local YAML-backed project data.",
+      "reason": "Reads fixed curriculum metadata from checked-in YAML files and does not cause side effects.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -42,7 +42,7 @@
       "target": "save_lesson_pointer",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Writes lesson resume state to the persistent learner database.",
+      "reason": "Writes lesson resume state to the SQLite store, so mocking is useful when the write should not affect the simulated learner profile.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -51,7 +51,7 @@
       "target": "cache_lesson",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Persists generated lesson content for future resume behavior.",
+      "reason": "Persists generated lesson content to the SQLite cache, which is a stateful write with deterministic replay implications.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -60,7 +60,7 @@
       "target": "get_cached_lesson",
       "kind": "tool",
       "final_policy": "do_not_mock",
-      "reason": "Reads cached lesson JSON from local persistent state without external calls.",
+      "reason": "Reads cached lesson JSON from the local SQLite store and is safe to exercise live when state matters.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -69,7 +69,7 @@
       "target": "record_attempt",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Writes graded exercise attempts to the persistent learner database.",
+      "reason": "Appends learner attempt history to the SQLite store and is a state-mutating side effect.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -78,7 +78,7 @@
       "target": "log_error",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Writes learner mistakes to the durable error log used by later review flows.",
+      "reason": "Writes learner error records to persistent storage, which is a side effect that often should be controlled in tests.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -87,7 +87,7 @@
       "target": "update_mastery",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Mutates persisted mastery and unit status values for the learner.",
+      "reason": "Updates mastery and unit status in persistent storage, so it changes learner state across turns and runs.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -96,7 +96,7 @@
       "target": "add_vocab",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Writes new vocabulary cards into the learner's spaced-repetition deck.",
+      "reason": "Adds new vocabulary cards to the spaced-repetition deck in SQLite, which is a persistent mutation.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -105,7 +105,7 @@
       "target": "get_due_vocab",
       "kind": "tool",
       "final_policy": "do_not_mock",
-      "reason": "Reads due spaced-repetition cards from local learner state without external services.",
+      "reason": "Reads due vocabulary cards from the local store without external calls or additional side effects.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -114,7 +114,7 @@
       "target": "review_vocab",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Updates spaced-repetition scheduling state in the persistent learner database.",
+      "reason": "Recomputes and writes spaced-repetition scheduling state for a vocab card, making it a persistent mutation.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     },
@@ -123,7 +123,7 @@
       "target": "log_session_summary",
       "kind": "tool",
       "final_policy": "mock",
-      "reason": "Writes a session recap that changes later welcome-back behavior.",
+      "reason": "Persists a session recap in SQLite, which is a local write side effect.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
     }

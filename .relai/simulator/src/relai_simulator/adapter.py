@@ -1,192 +1,297 @@
 from __future__ import annotations
 
 import asyncio
-import atexit
 import os
 import uuid
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
+from dotenv import load_dotenv
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
+from langchain_core.tools import BaseTool
+from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.sqlite import SqliteSaver
+from langgraph.graph import END, START, StateGraph
+from langgraph.prebuilt import create_react_agent
 
-from german_tutor.cli import CHECKPOINT_DB, COMMAND_PROMPTS, help_text
-from german_tutor.graph import build_tutor_graph
-from german_tutor.persistence import DEFAULT_DB_PATH, Store
-from german_tutor.tools_lc import make_tools
-from relai_simulator.adapter_contract import (
-    AgentAdapter,
-    AgentTurnResult,
-    ToolCallRecord,
-    ToolResultRecord,
+from german_tutor.cli import run_turn as run_graph_turn
+from german_tutor.graph import (
+    DEFAULT_MODEL,
+    OFFTOPIC_REPLY,
+    ROUTER_SYSTEM,
+    SPECIALIST_PROMPTS,
+    TutorState,
+    _RouteDecision,
 )
+from german_tutor.persistence import Store
+from german_tutor.srs import SrsState, review
+from german_tutor.tools_lc import make_tools
+from relai_simulator.adapter_contract import AgentAdapter, AgentTurnResult, ToolCallRecord, ToolResultRecord
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_LEARNER_ID = "relai-simulator"
+SIMULATOR_ROOT = PROJECT_ROOT / ".relai" / "simulator"
+DEFAULT_RUNTIME_DIR = SIMULATOR_ROOT / "runtime"
+
+
+@dataclass(slots=True)
+class RuntimeConfig:
+    learner_id: str
+    db_path: Path
+    checkpoint_db_path: Path
+
+
+def _project_model() -> str:
+    return os.getenv("OPENAI_MODEL", DEFAULT_MODEL)
+
+
+def _stringify_content(content: object) -> str | None:
+    if content is None:
+        return None
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts: list[str] = []
+        for item in content:
+            if isinstance(item, str):
+                parts.append(item)
+            elif isinstance(item, dict):
+                text = item.get("text")
+                if text:
+                    parts.append(str(text))
+            else:
+                parts.append(str(item))
+        text = "".join(parts).strip()
+        return text or None
+    return str(content)
+
+
+def _runtime_config(*, isolated: bool) -> RuntimeConfig:
+    load_dotenv()
+    DEFAULT_RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
+
+    session_id = uuid.uuid4().hex
+    learner_id = os.getenv("TUTOR_LEARNER_ID") or f"relai-sim-{session_id[:8]}"
+
+    if isolated:
+        db_path = Path(os.getenv("TUTOR_DB", DEFAULT_RUNTIME_DIR / f"{session_id}-progress.db"))
+        checkpoint_db_path = Path(
+            os.getenv(
+                "RELAI_SIMULATOR_CHECKPOINT_DB",
+                DEFAULT_RUNTIME_DIR / f"{session_id}-graph.db",
+            )
+        )
+    else:
+        db_path = Path(os.getenv("TUTOR_DB", DEFAULT_RUNTIME_DIR / "component-progress.db"))
+        checkpoint_db_path = Path(
+            os.getenv(
+                "RELAI_SIMULATOR_CHECKPOINT_DB",
+                DEFAULT_RUNTIME_DIR / "component-graph.db",
+            )
+        )
+
+    if not db_path.is_absolute():
+        db_path = (PROJECT_ROOT / db_path).resolve()
+    if not checkpoint_db_path.is_absolute():
+        checkpoint_db_path = (PROJECT_ROOT / checkpoint_db_path).resolve()
+
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    checkpoint_db_path.parent.mkdir(parents=True, exist_ok=True)
+    return RuntimeConfig(
+        learner_id=learner_id,
+        db_path=db_path,
+        checkpoint_db_path=checkpoint_db_path,
+    )
+
+
+def _build_simulator_graph(store: Store, learner_id: str, tool_groups: dict[str, list[BaseTool]]):
+    llm = ChatOpenAI(model=_project_model(), temperature=0.3)
+    router_llm = ChatOpenAI(model=_project_model(), temperature=0).with_structured_output(_RouteDecision)
+
+    specialists = {
+        name: create_react_agent(llm, tool_groups[name], prompt=prompt)
+        for name, prompt in SPECIALIST_PROMPTS.items()
+    }
+
+    def router(state: TutorState) -> dict[str, object]:
+        messages = state["messages"]
+        last = messages[-1]
+        text = last.content if isinstance(last.content, str) else str(last.content)
+        summary = store.welcome_back(learner_id)
+        decision = router_llm.invoke(
+            [
+                SystemMessage(ROUTER_SYSTEM.format(state_summary=summary)),
+                HumanMessage(text),
+            ]
+        )
+        return {"route": decision.route}
+
+    def make_specialist_node(name: str):
+        agent = specialists[name]
+
+        def node(state: TutorState) -> dict[str, object]:
+            messages = state["messages"]
+            result = agent.invoke({"messages": messages})
+            new_messages = result["messages"][len(messages):]
+            return {"messages": new_messages}
+
+        return node
+
+    def offtopic_node(state: TutorState) -> dict[str, object]:
+        del state
+        return {"messages": [AIMessage(content=OFFTOPIC_REPLY)]}
+
+    workflow = StateGraph(TutorState)
+    workflow.add_node("router", router)
+    for name in SPECIALIST_PROMPTS:
+        workflow.add_node(name, make_specialist_node(name))
+    workflow.add_node("offtopic", offtopic_node)
+    workflow.add_edge(START, "router")
+    workflow.add_conditional_edges(
+        "router",
+        lambda state: state["route"],
+        {name: name for name in (*SPECIALIST_PROMPTS, "offtopic")},
+    )
+    for name in (*SPECIALIST_PROMPTS, "offtopic"):
+        workflow.add_edge(name, END)
+    return workflow
+
+
+def _flatten_tool_groups(tool_groups: dict[str, list[BaseTool]]) -> list[BaseTool]:
+    tools_by_name: dict[str, BaseTool] = {}
+    for tool_list in tool_groups.values():
+        for tool in tool_list:
+            tools_by_name.setdefault(tool.name, tool)
+    return list(tools_by_name.values())
+
+
+def _tool_by_name(tool_name: str, config: RuntimeConfig) -> BaseTool:
+    store = Store(config.db_path)
+    tools = _flatten_tool_groups(make_tools(store, config.learner_id))
+    for tool in tools:
+        if tool.name == tool_name:
+            return tool
+    raise KeyError(f"Unknown tutor tool: {tool_name}")
+
+
+def component_set_level(level: str) -> str:
+    return _tool_by_name("set_level", _runtime_config(isolated=False)).invoke({"level": level})
+
+
+def component_get_unit_details(unit_id: str) -> str:
+    return _tool_by_name("get_unit_details", _runtime_config(isolated=False)).invoke({"unit_id": unit_id})
+
+
+def component_review_srs(
+    ease: float = 2.5,
+    interval: int = 0,
+    reps: int = 0,
+    quality: int = 5,
+) -> dict[str, float | int]:
+    state = review(SrsState(ease=ease, interval=interval, reps=reps), quality)
+    return {"ease": state.ease, "interval": state.interval, "reps": state.reps}
 
 
 class ProjectAgentAdapter:
     def __init__(self) -> None:
-        self.learner_id = os.getenv("TUTOR_LEARNER_ID", DEFAULT_LEARNER_ID)
-        self.db_path = self._resolve_path(os.getenv("TUTOR_DB"), DEFAULT_DB_PATH)
-        self.thread_id = os.getenv(
-            "RELAI_SIMULATOR_THREAD_ID",
-            f"relai-simulator-{uuid.uuid4().hex}",
-        )
-        self.checkpoint_db = self._resolve_path(
-            os.getenv("RELAI_SIMULATOR_CHECKPOINT_DB"),
-            CHECKPOINT_DB,
-        )
+        config = _runtime_config(isolated=True)
+        self._runtime = config
+        self._store = Store(config.db_path)
+        self._store.get_or_create_learner(config.learner_id)
+        self._tool_groups = make_tools(self._store, config.learner_id)
+        self.agent_or_tools = _flatten_tool_groups(self._tool_groups)
+        self._checkpointer_context = SqliteSaver.from_conn_string(str(config.checkpoint_db_path))
+        self._checkpointer = self._checkpointer_context.__enter__()
+        self._graph = _build_simulator_graph(
+            self._store,
+            config.learner_id,
+            self._tool_groups,
+        ).compile(checkpointer=self._checkpointer)
+        self._graph_config = {
+            "configurable": {
+                "thread_id": f"learner-{config.learner_id}-{uuid.uuid4().hex[:8]}",
+            }
+        }
         self._message_count = 0
-        self._store = Store(self.db_path)
-        self._store.get_or_create_learner(self.learner_id)
-        self._checkpointer_cm = SqliteSaver.from_conn_string(str(self.checkpoint_db))
-        self._checkpointer = self._checkpointer_cm.__enter__()
-        self._graph = build_tutor_graph(self._store, self.learner_id).compile(
-            checkpointer=self._checkpointer
-        )
-        self._config = {"configurable": {"thread_id": self.thread_id}}
-        self.agent_or_tools = self._build_agent_tools()
-        atexit.register(self.close)
 
     async def run_turn(self, user_message: str) -> AgentTurnResult:
-        return await asyncio.to_thread(self._run_turn_sync, user_message)
-
-    def close(self) -> None:
-        checkpointer_cm = getattr(self, "_checkpointer_cm", None)
-        if checkpointer_cm is not None:
-            self._checkpointer_cm = None
-            checkpointer_cm.__exit__(None, None, None)
-        store = getattr(self, "_store", None)
-        if store is not None:
-            self._store = None
-            store.close()
-
-    def _run_turn_sync(self, user_message: str) -> AgentTurnResult:
-        prepared_turn = self._prepare_turn(user_message)
-        if isinstance(prepared_turn, AgentTurnResult):
-            return prepared_turn
-        user_message = prepared_turn
-
-        result = self._graph.invoke(
-            {"messages": [HumanMessage(content=user_message)]},
-            config=self._config,
+        result = await asyncio.to_thread(
+            run_graph_turn,
+            self._graph,
+            user_message,
+            self._graph_config,
         )
-        messages = list(result.get("messages", []))
-        new_messages = messages[self._message_count :] if self._message_count <= len(messages) else messages
-        self._message_count = len(messages)
+        state = await asyncio.to_thread(self._graph.get_state, self._graph_config)
+        all_messages = list(state.values.get("messages", []))
+        new_messages = all_messages[self._message_count:]
+        self._message_count = len(all_messages)
 
-        tool_calls: list[ToolCallRecord] = []
-        tool_results: list[ToolResultRecord] = []
-        call_names: dict[str, str] = {}
-        for message in new_messages:
-            if isinstance(message, AIMessage):
-                for tool_call in getattr(message, "tool_calls", []) or []:
-                    call_id = self._optional_str(tool_call.get("id"))
-                    name = self._optional_str(tool_call.get("name")) or "tool"
-                    if call_id is not None:
-                        call_names[call_id] = name
-                    tool_calls.append(
-                        ToolCallRecord(
-                            name=name,
-                            arguments=tool_call.get("args", {}),
-                            call_id=call_id,
-                            metadata={"message_type": type(message).__name__},
-                        )
-                    )
-            elif isinstance(message, ToolMessage):
-                call_id = self._optional_str(getattr(message, "tool_call_id", None))
-                tool_results.append(
-                    ToolResultRecord(
-                        name=getattr(message, "name", None) or call_names.get(call_id) or "tool",
-                        result=self._message_content(message.content),
-                        call_id=call_id,
-                        metadata={"message_type": type(message).__name__},
-                    )
-                )
-
-        assistant_message = self._extract_reply(messages)
+        tool_calls, tool_results = _collect_tool_records(new_messages)
+        assistant_message = result if isinstance(result, str) else _last_ai_message(new_messages)
         return AgentTurnResult(
             assistant_message=assistant_message,
-            metadata={
-                "learner_id": self.learner_id,
-                "thread_id": self.thread_id,
-            },
             tool_calls=tool_calls,
             tool_results=tool_results,
         )
 
-    def _prepare_turn(self, user_message: str) -> str | AgentTurnResult:
-        lowered = user_message.strip().lower()
-        if lowered in COMMAND_PROMPTS:
-            return COMMAND_PROMPTS[lowered]
-        if lowered == "/help":
-            return AgentTurnResult(assistant_message=help_text())
-        if lowered == "/whoami":
-            level = self._store.get_level(self.learner_id)
-            return AgentTurnResult(
-                assistant_message=f"Learner id: {self.learner_id} (level {level})"
+    def close(self) -> None:
+        context = getattr(self, "_checkpointer_context", None)
+        if context is not None:
+            self._checkpointer_context = None
+            context.__exit__(None, None, None)
+
+    def __del__(self) -> None:
+        self.close()
+
+
+def _last_ai_message(messages: list[Any]) -> str | None:
+    for message in reversed(messages):
+        if isinstance(message, AIMessage):
+            text = _stringify_content(message.content)
+            if text:
+                return text
+    return None
+
+
+def _collect_tool_records(messages: list[Any]) -> tuple[list[ToolCallRecord], list[ToolResultRecord]]:
+    tool_calls: list[ToolCallRecord] = []
+    tool_results: list[ToolResultRecord] = []
+    tool_names_by_call_id: dict[str, str] = {}
+
+    for message in messages:
+        if isinstance(message, AIMessage):
+            for tool_call in getattr(message, "tool_calls", []) or []:
+                call_id = tool_call.get("id")
+                name = str(tool_call.get("name", "tool"))
+                if call_id:
+                    tool_names_by_call_id[str(call_id)] = name
+                tool_calls.append(
+                    ToolCallRecord(
+                        name=name,
+                        arguments=tool_call.get("args", {}),
+                        call_id=str(call_id) if call_id else None,
+                    )
+                )
+        elif isinstance(message, ToolMessage):
+            call_id = getattr(message, "tool_call_id", None)
+            name = (
+                getattr(message, "name", None)
+                or tool_names_by_call_id.get(str(call_id))
+                or "tool"
             )
-        if lowered.startswith("/level"):
-            parts = user_message.split()
-            if len(parts) == 2 and parts[1].upper() in {"A1", "A2", "B1", "B2"}:
-                level = parts[1].upper()
-                self._store.set_level(self.learner_id, level)
-                return AgentTurnResult(assistant_message=f"Level set to {level}.")
-            return AgentTurnResult(assistant_message="Usage: /level A1|A2|B1|B2")
-        if lowered in {"/quit", "/exit"}:
-            return AgentTurnResult(assistant_message="Tschüss! Your progress is saved.")
-        return user_message
+            status = getattr(message, "status", None)
+            content = _stringify_content(message.content)
+            tool_results.append(
+                ToolResultRecord(
+                    name=str(name),
+                    result=None if status == "error" else content,
+                    error=content if status == "error" else None,
+                    call_id=str(call_id) if call_id else None,
+                )
+            )
 
-    def _build_agent_tools(self) -> list[object]:
-        tools_by_name: dict[str, object] = {}
-        for group in make_tools(self._store, self.learner_id).values():
-            for tool in group:
-                name = getattr(tool, "name", None)
-                if isinstance(name, str) and name and name not in tools_by_name:
-                    tools_by_name[name] = tool
-        return list(tools_by_name.values())
-
-    def _extract_reply(self, messages: list[Any]) -> str:
-        for message in reversed(messages):
-            if isinstance(message, AIMessage):
-                content = self._message_content(message.content)
-                if isinstance(content, str) and content.strip():
-                    return content
-        return "(no response)"
-
-    @staticmethod
-    def _message_content(content: Any) -> Any:
-        if isinstance(content, str):
-            return content
-        if isinstance(content, list):
-            text_parts: list[str] = []
-            normalized: list[object] = []
-            for item in content:
-                if isinstance(item, dict):
-                    normalized.append(item)
-                    if item.get("type") == "text" and isinstance(item.get("text"), str):
-                        text_parts.append(item["text"])
-                else:
-                    normalized.append(str(item))
-            if text_parts:
-                return "\n".join(part for part in text_parts if part.strip())
-            return normalized
-        return content
-
-    @staticmethod
-    def _optional_str(value: object) -> str | None:
-        if value is None:
-            return None
-        return str(value)
-
-    @staticmethod
-    def _resolve_path(raw_value: str | os.PathLike[str] | None, default_value: str | os.PathLike[str]) -> Path:
-        path = Path(raw_value or default_value)
-        if not path.is_absolute():
-            path = PROJECT_ROOT / path
-        path.parent.mkdir(parents=True, exist_ok=True)
-        return path
+    return tool_calls, tool_results
 
 
 def build_agent_adapter() -> AgentAdapter:

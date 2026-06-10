@@ -20,7 +20,7 @@ import importlib
 import os
 import sys
 
-for module_name in ["relai", "relai_simulator", "german_tutor", "relai_simulator.components"]:
+for module_name in ["relai", "relai_simulator", "german_tutor"]:
     importlib.import_module(module_name)
 if os.environ.get("RELAI_REQUIRE_OPTIMIZER_BACKEND") == "1":
     if sys.version_info[:2] != (3, 12):

@@ -2,76 +2,51 @@
   "schema_version": "relai.learning_env_context.v1",
   "agent": {
     "entrypoint": "src/german_tutor/graph.py",
-    "runner_summary": "The simulator builds one Store and LangGraph checkpointer, compiles build_tutor_graph once, preserves a single thread_id for the run, and calls the sync graph through a worker thread on each user turn."
+    "runner_summary": "The simulator rebuilds the LangGraph tutor with the project's prompts and tool factory, preserves LangGraph thread state across turns, and calls the existing synchronous run_turn helper through asyncio.to_thread."
   },
   "components": [
     {
-      "id": "get_learner_state",
-      "import_path": "relai_simulator.components:get_learner_state",
-      "when_to_use": "Use for wrong welcome-back summaries, learner state snapshots, or missing resume metadata.",
-      "live_mock_targets": [
-        "get_learner_state"
-      ],
-      "required_mock_targets": [],
-      "input_guidance": "Use FixedComponentInput(kwargs={\"learner_id\": \"...\", \"db_path\": \"...\"}) when reproducing a specific learner record; omit kwargs to use the simulator defaults. This wrapper takes only named kwargs.",
-      "output_guidance": "Evaluate the returned JSON for level, lesson pointer, due_vocab, weak_spots, and last_session fields."
-    },
-    {
-      "id": "get_next_unit",
-      "import_path": "relai_simulator.components:get_next_unit",
-      "when_to_use": "Use for curriculum progression bugs or when the tutor picks the wrong next lesson.",
-      "live_mock_targets": [
-        "get_next_unit"
-      ],
-      "required_mock_targets": [],
-      "input_guidance": "Use FixedComponentInput(kwargs={\"learner_id\": \"...\", \"db_path\": \"...\"}) to point at the learner state that should drive unit selection. Do not pass positional args.",
-      "output_guidance": "Evaluate the returned JSON for the chosen unit_id, done flag, and level alignment."
-    },
-    {
       "id": "set_level",
-      "import_path": "relai_simulator.components:set_level",
-      "when_to_use": "Use for placement regressions or direct level-setting behavior without running the full graph.",
+      "import_path": "relai_simulator.adapter:component_set_level",
+      "when_to_use": "Use for placement regressions where the tutor chooses the right level verbally but writes the wrong CEFR value.",
       "live_mock_targets": [
         "set_level"
       ],
       "required_mock_targets": [],
-      "input_guidance": "Use FixedComponentInput(kwargs={\"level\": \"A2\", \"learner_id\": \"...\", \"db_path\": \"...\"}). The level argument should be one of A1, A2, B1, or B2.",
-      "output_guidance": "Evaluate the returned JSON for ok=true and the normalized level value."
+      "input_guidance": "Use FixedComponentInput(kwargs={\"level\": \"A1\"}) with the CEFR level inferred from the transcript or reviewer feedback.",
+      "output_guidance": "Check the returned JSON for ok=true and the normalized level value."
     },
     {
-      "id": "get_cached_lesson",
-      "import_path": "relai_simulator.components:get_cached_lesson",
-      "when_to_use": "Use for resume failures where the tutor should replay a cached lesson but instead regenerates or loses lesson content.",
-      "live_mock_targets": [
-        "get_cached_lesson"
-      ],
+      "id": "get_unit_details",
+      "import_path": "relai_simulator.adapter:component_get_unit_details",
+      "when_to_use": "Use for curriculum-selection or lesson-planning regressions tied to the unit metadata the agent reads.",
+      "live_mock_targets": [],
       "required_mock_targets": [],
-      "input_guidance": "Use FixedComponentInput(kwargs={\"unit_id\": \"A1.U1\", \"learner_id\": \"...\", \"db_path\": \"...\"}). The wrapper expects named kwargs only.",
-      "output_guidance": "Evaluate whether the returned JSON lesson is present, structurally valid, and matches the expected unit content."
+      "input_guidance": "Use FixedComponentInput(kwargs={\"unit_id\": \"A1.U1\"}) with the exact unit id mentioned in the failing run.",
+      "output_guidance": "Evaluate the returned unit fields such as objectives, grammar points, and vocab theme."
     },
     {
-      "id": "review_vocab",
-      "import_path": "relai_simulator.components:review_vocab",
-      "when_to_use": "Use for spaced-repetition scheduling regressions after a learner grades a vocab card.",
-      "live_mock_targets": [
-        "review_vocab"
-      ],
+      "id": "review_srs",
+      "import_path": "relai_simulator.adapter:component_review_srs",
+      "when_to_use": "Use for isolated spaced-repetition scheduling bugs without running the full tutor graph.",
+      "live_mock_targets": [],
       "required_mock_targets": [],
-      "input_guidance": "Use FixedComponentInput(kwargs={\"card_id\": 1, \"quality\": 4, \"learner_id\": \"...\", \"db_path\": \"...\"}) with named schema args matching the LangChain tool signature.",
-      "output_guidance": "Evaluate the returned JSON for the reviewed lemma, new interval, and due_date changes."
+      "input_guidance": "Use FixedComponentInput(kwargs={\"ease\": 2.5, \"interval\": 6, \"reps\": 2, \"quality\": 4}) with the original card state and review grade from logs.",
+      "output_guidance": "Evaluate the returned ease, interval, and reps values against the expected SM-2 transition."
     }
   ],
   "log_notes": [
-    "User turns appear as user_message events.",
-    "Assistant replies appear as agent_message events after the LangGraph run completes for the turn.",
-    "LangChain tool invocations appear as tool_call and tool_result events when the graph executes tool-enabled specialist agents.",
-    "Observed RELAI tool mocks appear as mock_call events on the same turn."
+    "User turns appear as user_message events containing the learner prompt after CLI command expansion.",
+    "Assistant turns appear as agent_message events after the selected specialist finishes its tool loop.",
+    "LangChain tool invocations are recorded as tool_call and tool_result events extracted from AIMessage.tool_calls and ToolMessage objects.",
+    "Observed RELAI mock usage is recorded as mock_call events after each simulator turn."
   ],
   "learning_env_guidance": [
-    "Use an agent target for routing, guardrail, specialist-selection, or multi-turn conversation regressions.",
-    "Use a component target when the bug is isolated to learner-state lookup, curriculum progression, cached lesson retrieval, direct level changes, or spaced-repetition updates.",
-    "Use FixedInput when exact commands such as /lesson, /resume, /progress, or /level A2 matter to the regression.",
-    "Use PersonaInput when learner confusion, persistence, or conversational tone changes the router or specialist behavior.",
-    "Use LLMJudgeEvaluator for teaching quality, level appropriateness, and refusal quality; use CodeEvaluator for deterministic JSON outputs, selected tool calls, and persisted-state expectations."
+    "Use an end-to-end agent target for routing, off-topic refusal, lesson pacing, or any regression that depends on persistent LangGraph thread state.",
+    "Use FixedInput for command-driven flows such as /lesson, /resume, /review, /placement, or /progress where the exact prompt wording matters.",
+    "Use PersonaInput when the learner's persistence, confusion, or willingness to answer follow-up questions is part of the failure.",
+    "Mock store-writing tools such as set_level, save_lesson_pointer, cache_lesson, record_attempt, log_error, update_mastery, add_vocab, review_vocab, and log_session_summary when you need to isolate language behavior from durable side effects.",
+    "Keep get_learner_state, get_next_unit, get_unit_details, get_cached_lesson, and get_due_vocab live when the failure depends on real curriculum or learner-state reads.",
+    "Use component targets for focused curriculum or SRS regressions before escalating to a full agent simulation."
   ]
 }
