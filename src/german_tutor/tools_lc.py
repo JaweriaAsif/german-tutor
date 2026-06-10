@@ -26,14 +26,17 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
     @tool
     def get_learner_state() -> str:
         """Return the learner's level, lesson pointer, progress, due-vocab count and weak spots."""
+        pointer = store.get_pointer(learner_id)
+        progress = store.progress_summary(learner_id)
         return json.dumps(
             {
                 "level": store.get_level(learner_id),
-                "pointer": store.get_pointer(learner_id),
-                "progress": store.progress_summary(learner_id),
+                "pointer": pointer,
+                "progress": progress,
                 "due_vocab": store.count_due_vocab(learner_id),
                 "weak_spots": store.top_errors(learner_id, limit=5),
                 "last_session": store.last_session(learner_id),
+                "is_absolute_beginner": pointer is None and not progress,
             }
         )
 

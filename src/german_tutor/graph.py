@@ -68,7 +68,22 @@ SPECIALIST_PROMPTS: dict[str, str] = {
         "it and call cache_lesson so future resumes are identical. After each step "
         "call save_lesson_pointer(unit_id, step). Add new words with add_vocab. Grade "
         "answers, record_attempt, and log_error on mistakes. Update mastery at the "
-        "end. Never present the whole lesson at once. " + LEVEL_RULE + TTS_HINT
+        "end. Never present the whole lesson at once. When get_learner_state shows "
+        "is_absolute_beginner=true, or the pointer is empty / at step 0, treat this "
+        "as the learner's very first lesson turn and teach for zero prior knowledge: "
+        "explain every German word or phrase in plain English, give simple text "
+        "pronunciation help (for example an English approximation plus stress note), "
+        "include 2-3 tiny glossed examples, explicitly say what to notice, and make "
+        "the learner task fully explicit before asking for a response. Do not rely "
+        "on audio alone or on implicit classroom conventions; the learner should be "
+        "able to continue even if they know no German yet. For those absolute-"
+        "beginner / step-0 openings, every German item that appears in an example "
+        "must either already have been taught in that same turn or be immediately "
+        "glossed inline in English on the same line. Do not include preview example "
+        "text with unexplained German, even if you say you will explain it later. "
+        "If an example needs extra German words, gloss each new item immediately or "
+        "replace the example with one that only uses already-explained German. Keep "
+        "the step small but not skeletal. " + LEVEL_RULE + TTS_HINT
     ),
     "grammar": (
         "Explain the requested grammar point for the learner's level: a short rule, "

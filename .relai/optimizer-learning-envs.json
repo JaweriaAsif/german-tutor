@@ -1,0 +1,22 @@
+{
+  "scope_tags": [
+    "end-to-end",
+    "get_unit_details",
+    "review_srs",
+    "set_level"
+  ],
+  "learning_envs": [
+    {
+      "kind": "path",
+      "path": ".relai/learning-envs/beginner-lesson-detail.py"
+    },
+    {
+      "kind": "path",
+      "path": ".relai/learning-envs/detailed-no-german-assumed.py"
+    },
+    {
+      "kind": "path",
+      "path": ".relai/learning-envs/high-quality-lesson.py"
+    }
+  ]
+}
