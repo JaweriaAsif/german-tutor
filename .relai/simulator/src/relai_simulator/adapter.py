@@ -8,22 +8,12 @@ from pathlib import Path
 from typing import Any
 
 from dotenv import load_dotenv
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
+from langchain_core.messages import AIMessage, ToolMessage
 from langchain_core.tools import BaseTool
-from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.sqlite import SqliteSaver
-from langgraph.graph import END, START, StateGraph
-from langgraph.prebuilt import create_react_agent
 
-from german_tutor.cli import run_turn as run_graph_turn
-from german_tutor.graph import (
-    DEFAULT_MODEL,
-    OFFTOPIC_REPLY,
-    ROUTER_SYSTEM,
-    SPECIALIST_PROMPTS,
-    TutorState,
-    _RouteDecision,
-)
+from german_tutor.cli import COMMAND_PROMPTS, run_turn as run_graph_turn
+from german_tutor.graph import build_tutor_graph
 from german_tutor.persistence import Store
 from german_tutor.srs import SrsState, review
 from german_tutor.tools_lc import make_tools
@@ -40,10 +30,6 @@ class RuntimeConfig:
     learner_id: str
     db_path: Path
     checkpoint_db_path: Path
-
-
-def _project_model() -> str:
-    return os.getenv("OPENAI_MODEL", DEFAULT_MODEL)
 
 
 def _stringify_content(content: object) -> str | None:
@@ -105,59 +91,6 @@ def _runtime_config(*, isolated: bool) -> RuntimeConfig:
     )
 
 
-def _build_simulator_graph(store: Store, learner_id: str, tool_groups: dict[str, list[BaseTool]]):
-    llm = ChatOpenAI(model=_project_model(), temperature=0.3)
-    router_llm = ChatOpenAI(model=_project_model(), temperature=0).with_structured_output(_RouteDecision)
-
-    specialists = {
-        name: create_react_agent(llm, tool_groups[name], prompt=prompt)
-        for name, prompt in SPECIALIST_PROMPTS.items()
-    }
-
-    def router(state: TutorState) -> dict[str, object]:
-        messages = state["messages"]
-        last = messages[-1]
-        text = last.content if isinstance(last.content, str) else str(last.content)
-        summary = store.welcome_back(learner_id)
-        decision = router_llm.invoke(
-            [
-                SystemMessage(ROUTER_SYSTEM.format(state_summary=summary)),
-                HumanMessage(text),
-            ]
-        )
-        return {"route": decision.route}
-
-    def make_specialist_node(name: str):
-        agent = specialists[name]
-
-        def node(state: TutorState) -> dict[str, object]:
-            messages = state["messages"]
-            result = agent.invoke({"messages": messages})
-            new_messages = result["messages"][len(messages):]
-            return {"messages": new_messages}
-
-        return node
-
-    def offtopic_node(state: TutorState) -> dict[str, object]:
-        del state
-        return {"messages": [AIMessage(content=OFFTOPIC_REPLY)]}
-
-    workflow = StateGraph(TutorState)
-    workflow.add_node("router", router)
-    for name in SPECIALIST_PROMPTS:
-        workflow.add_node(name, make_specialist_node(name))
-    workflow.add_node("offtopic", offtopic_node)
-    workflow.add_edge(START, "router")
-    workflow.add_conditional_edges(
-        "router",
-        lambda state: state["route"],
-        {name: name for name in (*SPECIALIST_PROMPTS, "offtopic")},
-    )
-    for name in (*SPECIALIST_PROMPTS, "offtopic"):
-        workflow.add_edge(name, END)
-    return workflow
-
-
 def _flatten_tool_groups(tool_groups: dict[str, list[BaseTool]]) -> list[BaseTool]:
     tools_by_name: dict[str, BaseTool] = {}
     for tool_list in tool_groups.values():
@@ -166,21 +99,30 @@ def _flatten_tool_groups(tool_groups: dict[str, list[BaseTool]]) -> list[BaseToo
     return list(tools_by_name.values())
 
 
-def _tool_by_name(tool_name: str, config: RuntimeConfig) -> BaseTool:
+def _tool_by_name(tool_name: str, config: RuntimeConfig) -> tuple[BaseTool, Store]:
     store = Store(config.db_path)
     tools = _flatten_tool_groups(make_tools(store, config.learner_id))
     for tool in tools:
         if tool.name == tool_name:
-            return tool
+            return tool, store
+    store.close()
     raise KeyError(f"Unknown tutor tool: {tool_name}")
 
 
 def component_set_level(level: str) -> str:
-    return _tool_by_name("set_level", _runtime_config(isolated=False)).invoke({"level": level})
+    tool, store = _tool_by_name("set_level", _runtime_config(isolated=False))
+    try:
+        return tool.invoke({"level": level})
+    finally:
+        store.close()
 
 
 def component_get_unit_details(unit_id: str) -> str:
-    return _tool_by_name("get_unit_details", _runtime_config(isolated=False)).invoke({"unit_id": unit_id})
+    tool, store = _tool_by_name("get_unit_details", _runtime_config(isolated=False))
+    try:
+        return tool.invoke({"unit_id": unit_id})
+    finally:
+        store.close()
 
 
 def component_review_srs(
@@ -203,23 +145,24 @@ class ProjectAgentAdapter:
         self.agent_or_tools = _flatten_tool_groups(self._tool_groups)
         self._checkpointer_context = SqliteSaver.from_conn_string(str(config.checkpoint_db_path))
         self._checkpointer = self._checkpointer_context.__enter__()
-        self._graph = _build_simulator_graph(
+        self._graph = build_tutor_graph(
             self._store,
             config.learner_id,
-            self._tool_groups,
+            audio_markup=False,
         ).compile(checkpointer=self._checkpointer)
         self._graph_config = {
             "configurable": {
-                "thread_id": f"learner-{config.learner_id}-{uuid.uuid4().hex[:8]}",
+                "thread_id": f"learner-{config.learner_id}",
             }
         }
         self._message_count = 0
 
     async def run_turn(self, user_message: str) -> AgentTurnResult:
+        graph_input = _expand_cli_shortcut(user_message)
         result = await asyncio.to_thread(
             run_graph_turn,
             self._graph,
-            user_message,
+            graph_input,
             self._graph_config,
         )
         state = await asyncio.to_thread(self._graph.get_state, self._graph_config)
@@ -236,6 +179,10 @@ class ProjectAgentAdapter:
         )
 
     def close(self) -> None:
+        store = getattr(self, "_store", None)
+        if store is not None:
+            self._store = None
+            store.close()
         context = getattr(self, "_checkpointer_context", None)
         if context is not None:
             self._checkpointer_context = None
@@ -252,6 +199,10 @@ def _last_ai_message(messages: list[Any]) -> str | None:
             if text:
                 return text
     return None
+
+
+def _expand_cli_shortcut(user_message: str) -> str:
+    return COMMAND_PROMPTS.get(user_message.strip().lower(), user_message)
 
 
 def _collect_tool_records(messages: list[Any]) -> tuple[list[ToolCallRecord], list[ToolResultRecord]]:

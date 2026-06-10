@@ -18,6 +18,18 @@
       "required": false,
       "sensitive": false,
       "reason": "Optional stable learner identifier when you want simulator runs to reuse the same learner profile."
+    },
+    {
+      "name": "TUTOR_TTS_AUTOPLAY",
+      "required": false,
+      "sensitive": false,
+      "reason": "Optional toggle for whether the speak_german tool should try to play synthesized audio automatically."
+    },
+    {
+      "name": "TUTOR_TTS_VOICE",
+      "required": false,
+      "sensitive": false,
+      "reason": "Optional macOS say voice override used by the speak_german tool when local TTS is exercised live."
     }
   ],
   "files": [
@@ -30,6 +42,11 @@
       "path_env": "RELAI_SIMULATOR_CHECKPOINT_DB",
       "required": false,
       "reason": "Optional SQLite file path for the LangGraph checkpoint store; the adapter creates an isolated simulator-local checkpoint database when unset."
+    },
+    {
+      "path_env": "TUTOR_TTS_DIR",
+      "required": false,
+      "reason": "Optional directory path where the speak_german tool writes synthesized audio files when TTS is enabled."
     }
   ]
 }

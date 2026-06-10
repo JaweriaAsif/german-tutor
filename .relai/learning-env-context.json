@@ -1,8 +1,8 @@
 {
   "schema_version": "relai.learning_env_context.v1",
   "agent": {
-    "entrypoint": "src/german_tutor/graph.py",
-    "runner_summary": "The simulator rebuilds the LangGraph tutor with the project's prompts and tool factory, preserves LangGraph thread state across turns, and calls the existing synchronous run_turn helper through asyncio.to_thread."
+    "entrypoint": "src/german_tutor/cli.py",
+    "runner_summary": "The simulator creates a learner-scoped Store, compiles build_tutor_graph() with a simulator checkpoint DB, expands supported CLI shortcuts such as /lesson and /resume through the existing COMMAND_PROMPTS map, and calls german_tutor.cli.run_turn() in a worker thread while preserving one LangGraph thread_id across turns."
   },
   "components": [
     {
@@ -36,16 +36,16 @@
     }
   ],
   "log_notes": [
-    "User turns appear as user_message events containing the learner prompt after CLI command expansion.",
-    "Assistant turns appear as agent_message events after the selected specialist finishes its tool loop.",
-    "LangChain tool invocations are recorded as tool_call and tool_result events extracted from AIMessage.tool_calls and ToolMessage objects.",
+    "User turns appear as user_message events with the original learning-environment prompt; supported slash commands such as /lesson, /resume, /review, /placement, and /progress are expanded internally before the graph call.",
+    "Assistant turns appear as agent_message events after the selected LangGraph specialist finishes its tool loop.",
+    "LangChain tool invocations are recorded as tool_call and tool_result events extracted from AIMessage.tool_calls and ToolMessage objects in the compiled graph state.",
     "Observed RELAI mock usage is recorded as mock_call events after each simulator turn."
   ],
   "learning_env_guidance": [
     "Use an end-to-end agent target for routing, off-topic refusal, lesson pacing, or any regression that depends on persistent LangGraph thread state.",
-    "Use FixedInput for command-driven flows such as /lesson, /resume, /review, /placement, or /progress where the exact prompt wording matters.",
+    "Use FixedInput for command-driven flows such as /lesson, /resume, /review, /placement, or /progress when you want the simulator to exercise the same CLI shortcut expansion as the terminal app.",
     "Use PersonaInput when the learner's persistence, confusion, or willingness to answer follow-up questions is part of the failure.",
-    "Mock store-writing tools such as set_level, save_lesson_pointer, cache_lesson, record_attempt, log_error, update_mastery, add_vocab, review_vocab, and log_session_summary when you need to isolate language behavior from durable side effects.",
+    "Mock store-writing or local side-effect tools such as set_level, save_lesson_pointer, cache_lesson, record_attempt, log_error, update_mastery, add_vocab, review_vocab, log_session_summary, and speak_german when you need to isolate language behavior from durable state changes or audio subprocesses.",
     "Keep get_learner_state, get_next_unit, get_unit_details, get_cached_lesson, and get_due_vocab live when the failure depends on real curriculum or learner-state reads.",
     "Use component targets for focused curriculum or SRS regressions before escalating to a full agent simulation."
   ]

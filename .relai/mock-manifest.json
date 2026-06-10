@@ -126,6 +126,15 @@
       "reason": "Persists a session recap in SQLite, which is a local write side effect.",
       "source": "src/german_tutor/tools_lc.py",
       "cannot_mock_reason": null
+    },
+    {
+      "id": "speak_german",
+      "target": "speak_german",
+      "kind": "tool",
+      "final_policy": "mock",
+      "reason": "Creates local audio files and may launch OS-specific TTS playback subprocesses, so tests should usually control this side effect.",
+      "source": "src/german_tutor/tools_lc.py",
+      "cannot_mock_reason": null
     }
   ]
 }
