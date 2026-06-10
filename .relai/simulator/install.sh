@@ -20,11 +20,33 @@ require_command() {
   fi
 }
 
+require_relai_simulator_python() {
+  local python_bin="$1"
+  if [ ! -x "$python_bin" ]; then
+    echo "RELAI simulator Python was not found at $python_bin." >&2
+    exit 1
+  fi
+  "$python_bin" - <<'PY'
+import platform
+import sys
+
+if sys.version_info < (3, 11):
+    raise SystemExit(
+        "RELAI simulator requires Python 3.11 or newer, but the simulator venv is "
+        f"running Python {platform.python_version()} at {sys.executable}. "
+        "Install uv or make a separate Python 3.11+ interpreter available, then rerun relai init."
+    )
+PY
+}
+
 
 # BEGIN RELAI CLI SDK INSTALL - do not edit
 read_relai_config_value() {
-  require_command python3
-  python3 - "$ROOT_DIR/.relai/config.toml" "$1" "$2" <<'PY'
+  if [ -z "${RELAI_CONFIG_PYTHON:-}" ] || [ ! -x "$RELAI_CONFIG_PYTHON" ]; then
+    echo "RELAI simulator config reader requires a validated simulator venv Python." >&2
+    exit 1
+  fi
+  "$RELAI_CONFIG_PYTHON" - "$ROOT_DIR/.relai/config.toml" "$1" "$2" <<'PY'
 import sys
 import tomllib
 
@@ -39,8 +61,11 @@ PY
 }
 
 read_optional_relai_config_value() {
-  require_command python3
-  python3 - "$ROOT_DIR/.relai/config.toml" "$1" "$2" <<'PY'
+  if [ -z "${RELAI_CONFIG_PYTHON:-}" ] || [ ! -x "$RELAI_CONFIG_PYTHON" ]; then
+    echo "RELAI simulator config reader requires a validated simulator venv Python." >&2
+    exit 1
+  fi
+  "$RELAI_CONFIG_PYTHON" - "$ROOT_DIR/.relai/config.toml" "$1" "$2" <<'PY'
 import sys
 import tomllib
 
@@ -288,6 +313,8 @@ if [ ! -x "$VENV_DIR/bin/python" ]; then
     uv venv "$VENV_DIR"
   fi
 fi
+require_relai_simulator_python "$VENV_DIR/bin/python"
+export RELAI_CONFIG_PYTHON="$VENV_DIR/bin/python"
 
 # BEGIN RELAI CLI SDK INSTALL - do not edit
 install_relai_sdk "$VENV_DIR/bin/python" uv

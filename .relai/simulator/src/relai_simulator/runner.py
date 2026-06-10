@@ -13,6 +13,17 @@ import relai
 from relai_simulator.adapter_contract import AgentTurnResult
 
 
+_RESERVED_METADATA_KEYS = {
+    "arguments",
+    "call_id",
+    "content",
+    "error",
+    "name",
+    "result",
+    "turn_index",
+}
+
+
 async def run_loaded_environment(
     *,
     project_root: Path,
@@ -203,7 +214,23 @@ def _target_label(learning_environment: relai.RELAIEnvironment) -> str:
 
 
 def _safe_metadata(metadata: dict[str, object]) -> dict[str, object]:
-    return {str(key): _json_safe(value) for key, value in metadata.items()}
+    safe: dict[str, object] = {}
+    reserved: dict[str, object] = {}
+    for key, value in metadata.items():
+        safe_key = str(key)
+        if safe_key in _RESERVED_METADATA_KEYS:
+            reserved[safe_key] = _json_safe(value)
+        else:
+            safe[safe_key] = _json_safe(value)
+    existing_metadata = safe.pop("metadata", None)
+    if existing_metadata is not None:
+        if isinstance(existing_metadata, dict):
+            reserved = {**_object_dict(existing_metadata), **reserved}
+        else:
+            reserved = {"value": existing_metadata, **reserved}
+    if reserved:
+        safe["metadata"] = reserved
+    return safe
 
 
 def _json_safe(value: object) -> object:

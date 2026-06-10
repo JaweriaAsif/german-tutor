@@ -1,2 +1,0 @@
-[console_scripts]
-relai-simulator-runner = relai_simulator.runner:main

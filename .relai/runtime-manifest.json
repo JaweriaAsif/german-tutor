@@ -11,31 +11,32 @@
       "name": "OPENAI_MODEL",
       "required": false,
       "sensitive": false,
-      "reason": "Optional override for the tutor's default model used by the router and specialists."
+      "reason": "Optional override for the LangGraph tutor model selection."
     },
     {
       "name": "TUTOR_LEARNER_ID",
       "required": false,
       "sensitive": false,
-      "reason": "Optional stable learner id for the progress store used during simulation."
+      "reason": "Optional stable learner id for persisted progress and resume behavior."
     },
     {
-      "name": "TUTOR_THREAD_ID",
+      "name": "TUTOR_DB",
       "required": false,
       "sensitive": false,
-      "reason": "Optional LangGraph thread id when a simulation should reuse an existing checkpointed conversation."
-    }
-  ],
-  "files": [
-    {
-      "path_env": "TUTOR_DB",
-      "required": false,
-      "reason": "Optional SQLite progress database path for the learner store."
+      "reason": "Optional SQLite progress-store path used by the tutor tools."
     },
     {
-      "path_env": "TUTOR_CHECKPOINT_DB",
+      "name": "RELAI_SIMULATOR_THREAD_ID",
       "required": false,
-      "reason": "Optional SQLite checkpoint database path for LangGraph thread state."
+      "sensitive": false,
+      "reason": "Optional fixed LangGraph thread id when a test needs stable graph-session replay."
+    },
+    {
+      "name": "RELAI_SIMULATOR_CHECKPOINT_DB",
+      "required": false,
+      "sensitive": false,
+      "reason": "Optional SQLite checkpoint path for LangGraph conversation state."
     }
-  ]
+  ],
+  "files": []
 }
