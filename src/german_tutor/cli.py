@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -21,6 +22,9 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 
 from .graph import build_tutor_graph
 from .persistence import DEFAULT_DB_PATH, Store
+from .tts import play, synthesize, tts_available
+
+_DE_MARKER = re.compile(r"\[\[de:(.+?)\]\]", re.DOTALL)
 
 CHECKPOINT_DB = ".german_tutor/graph.db"
 
@@ -46,12 +50,45 @@ def help_text() -> str:
             "  /practice    Have a German conversation",
             "  /placement   Take a placement check to set your level",
             "  /progress    See how you're doing",
+            "  /play N      Play the Nth 🔊 word from the last reply aloud",
             "  /level <A1|A2|B1|B2>   Set your level directly",
             "  /whoami      Show your learner id",
             "  /help        Show this help",
             "  /quit /exit  Leave (your progress is saved)",
         ]
     )
+
+
+def _osc8(uri: str, label: str) -> str:
+    """Render an OSC 8 terminal hyperlink (clickable in iTerm2/VS Code/WezTerm/Kitty;
+    shown as plain text in terminals without OSC 8 support, e.g. Apple Terminal.app)."""
+    esc = "\x1b"
+    return f"{esc}]8;;{uri}{esc}\\{label}{esc}]8;;{esc}\\"
+
+
+def render_audio_markers(text: str) -> tuple[str, list[Path]]:
+    """Replace [[de:WORD]] markers with the German text + a numbered 🔊 control.
+
+    The 🔊N is a clickable OSC 8 link (plays in iTerm2/WezTerm/Kitty) AND is numbered
+    so `/play N` works everywhere (VS Code, Apple Terminal) via afplay. Returns the
+    rendered text and the ordered list of audio file paths for `/play`.
+    """
+    available = tts_available()
+    paths: list[Path] = []
+
+    def repl(match: re.Match) -> str:
+        german = match.group(1).strip()
+        if not available:
+            return german
+        path = synthesize(german)
+        if path is None or not path.exists():
+            return german
+        paths.append(path)
+        n = len(paths)
+        return f"{german} {_osc8(path.resolve().as_uri(), f'🔊{n}')}"
+
+    rendered = _DE_MARKER.sub(repl, text)
+    return rendered, paths
 
 
 def run_turn(graph, user_input: str, config: dict) -> str:
@@ -76,7 +113,9 @@ def chat(args: argparse.Namespace) -> int:
     Path(CHECKPOINT_DB).parent.mkdir(parents=True, exist_ok=True)
 
     with SqliteSaver.from_conn_string(CHECKPOINT_DB) as checkpointer:
-        graph = build_tutor_graph(store, learner_id).compile(checkpointer=checkpointer)
+        graph = build_tutor_graph(store, learner_id, audio_markup=True).compile(
+            checkpointer=checkpointer
+        )
 
         print("Deutsch-Tutor — CEFR A1-B2 German learning (LangGraph)")
         print(f"Learner: {learner_id}")
@@ -88,6 +127,8 @@ def chat(args: argparse.Namespace) -> int:
                 "Tip: run /placement to find your level."
             )
         print("Type /help for commands.\n")
+
+        last_audio: list[Path] = []
 
         while True:
             try:
@@ -108,6 +149,16 @@ def chat(args: argparse.Namespace) -> int:
             if lowered == "/help":
                 print(help_text())
                 continue
+            if lowered.startswith("/play"):
+                parts = user_input.split()
+                n = int(parts[1]) if len(parts) == 2 and parts[1].isdigit() else 1
+                if not last_audio:
+                    print("No audio from the last message yet.")
+                elif not (1 <= n <= len(last_audio)):
+                    print(f"Pick 1–{len(last_audio)} (e.g. /play 1).")
+                elif not play(last_audio[n - 1]):
+                    print("Could not play audio (no afplay).")
+                continue
             if lowered == "/whoami":
                 print(f"Learner id: {learner_id} (level {store.get_level(learner_id)})")
                 continue
@@ -123,7 +174,11 @@ def chat(args: argparse.Namespace) -> int:
             prompt = COMMAND_PROMPTS.get(lowered, user_input)
             try:
                 reply = run_turn(graph, prompt, config)
-                print(f"\nTutor: {reply}\n")
+                rendered, last_audio = render_audio_markers(reply)
+                print(f"\nTutor: {rendered}")
+                if last_audio:
+                    print("  (click 🔊, or type /play N to hear a word)")
+                print()
             except Exception as exc:  # noqa: BLE001 - keep the REPL alive on errors
                 print(f"\n[error] {exc}\n")
 

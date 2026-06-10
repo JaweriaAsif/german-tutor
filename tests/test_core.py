@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import pytest
+
 from german_tutor import curriculum as curr
+from german_tutor import tts
 from german_tutor.persistence import Store
 from german_tutor.srs import SrsState, review
 
@@ -59,6 +62,15 @@ def test_store_progress_and_resume(tmp_path):
     assert store2.is_returning("alice")
     assert store2.top_errors("alice")[0]["category"] == "wrong auxiliary"
     store2.close()
+
+
+@pytest.mark.skipif(not tts.tts_available(), reason="no local TTS (macOS 'say') available")
+def test_tts_synthesizes_audio(tmp_path):
+    path = tts.synthesize("Der Tisch ist groß.", out_dir=tmp_path)
+    assert path is not None and path.exists()
+    assert path.stat().st_size > 0
+    # Cached on second call (same content -> same file).
+    assert tts.synthesize("Der Tisch ist groß.", out_dir=tmp_path) == path
 
 
 def test_vocab_srs_reschedules(tmp_path):

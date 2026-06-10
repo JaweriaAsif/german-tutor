@@ -12,6 +12,7 @@ pointer, the spaced-repetition deck, and the error log.
 from __future__ import annotations
 
 import json
+import os
 
 from langchain_core.tools import BaseTool, tool
 
@@ -116,18 +117,39 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
         store.log_session(learner_id, summary)
         return json.dumps({"ok": True})
 
+    @tool
+    def speak_german(text: str) -> str:
+        """Generate spoken German audio for a word, phrase, or sentence so the learner
+        can hear the pronunciation. Saves an audio file and (on macOS) plays it aloud.
+        Use it when introducing a new word or a key example sentence. Pass natural
+        German text only (no phonetic spelling)."""
+        from .tts import play, synthesize, tts_available
+
+        if not tts_available():
+            return json.dumps(
+                {"ok": False, "error": "TTS unavailable on this system (no macOS 'say')."}
+            )
+        path = synthesize(text)
+        played = False
+        if path is not None and os.getenv("TUTOR_TTS_AUTOPLAY", "1") != "0":
+            played = play(path)
+        return json.dumps(
+            {"ok": path is not None, "audio_path": str(path) if path else None,
+             "played": played, "text": text}
+        )
+
     state = [get_learner_state, get_next_unit, get_unit_details]
     return {
         "state": state,
         "placement": [*state, set_level],
-        "grammar": state,
-        "vocab": [*state, add_vocab, get_due_vocab, review_vocab, log_error],
+        "grammar": [*state, speak_german],
+        "vocab": [*state, add_vocab, get_due_vocab, review_vocab, log_error, speak_german],
         "exercise": [*state, record_attempt, log_error],
         "lesson": [
             *state, get_cached_lesson, cache_lesson, save_lesson_pointer,
-            add_vocab, record_attempt, log_error, update_mastery,
+            add_vocab, record_attempt, log_error, update_mastery, speak_german,
         ],
-        "conversation": [*state, log_error],
+        "conversation": [*state, log_error, speak_german],
         "progress": [*state, update_mastery, log_session_summary],
         "concierge": state,
     }

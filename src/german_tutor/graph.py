@@ -39,6 +39,14 @@ LEVEL_RULE = (
     "say so. Be encouraging and concise."
 )
 
+TTS_HINT = (
+    " Pronunciation audio: call speak_german(text) AT MOST ONCE per turn, and only "
+    "for the single new word or one short example the learner is on right now. Do "
+    "NOT pre-generate audio for the whole lesson or call it several times in one "
+    "turn — pace it one item at a time, in step with the conversation. If the "
+    "learner wants to hear something specific, voice just that."
+)
+
 Route = Literal[
     "placement", "lesson", "grammar", "vocab", "exercise",
     "conversation", "progress", "concierge", "offtopic",
@@ -60,18 +68,18 @@ SPECIALIST_PROMPTS: dict[str, str] = {
         "it and call cache_lesson so future resumes are identical. After each step "
         "call save_lesson_pointer(unit_id, step). Add new words with add_vocab. Grade "
         "answers, record_attempt, and log_error on mistakes. Update mastery at the "
-        "end. Never present the whole lesson at once. " + LEVEL_RULE
+        "end. Never present the whole lesson at once. " + LEVEL_RULE + TTS_HINT
     ),
     "grammar": (
         "Explain the requested grammar point for the learner's level: a short rule, "
         "2-3 example sentences with English glosses, and one common pitfall. Offer to "
-        "drill it afterwards. " + LEVEL_RULE
+        "drill it afterwards. " + LEVEL_RULE + TTS_HINT
     ),
     "vocab": (
         "Teach or review vocabulary. For new words use add_vocab (include the article "
         "for nouns, e.g. 'der Tisch'). For review, call get_due_vocab, quiz ONE card "
         "at a time, and after each answer call review_vocab with a quality 0-5 (5 = "
-        "instant recall, <3 = failed). " + LEVEL_RULE
+        "instant recall, <3 = failed). " + LEVEL_RULE + TTS_HINT
     ),
     "exercise": (
         "Generate level-appropriate exercises for the current unit. Decide each "
@@ -84,7 +92,7 @@ SPECIALIST_PROMPTS: dict[str, str] = {
         "Role-play a realistic German dialogue (café, directions, interview, ...) at "
         "the learner's level. Speak mostly in German, keep turns short, gently correct "
         "serious mistakes inline with a brief English note, and log_error on notable "
-        "ones. " + LEVEL_RULE
+        "ones. " + LEVEL_RULE + TTS_HINT
     ),
     "progress": (
         "Summarize how the learner is doing in plain text, call update_mastery for the "
@@ -134,19 +142,39 @@ def _model() -> str:
     return os.getenv("OPENAI_MODEL", DEFAULT_MODEL)
 
 
-def build_tutor_graph(store: Store, learner_id: str):
+AUDIO_MARKUP_HINT = (
+    " IMPORTANT for pronunciation: wrap EVERY standalone German word, phrase, or "
+    "example sentence the learner sees in double square brackets, like [[de:der "
+    "Tisch]] or [[de:Ich heiße Anna.]]. The interface turns these into clickable "
+    "audio buttons. Wrap only real German (never English), and do it for the key "
+    "words and examples — not every little function word."
+)
+
+_AUDIO_AGENTS = ("placement", "lesson", "grammar", "vocab", "exercise", "conversation")
+
+
+def build_tutor_graph(store: Store, learner_id: str, audio_markup: bool = False):
     """Build (uncompiled) the tutor StateGraph for one learner.
 
     Compile it with a checkpointer in the caller:
         graph = build_tutor_graph(store, lid).compile(checkpointer=saver)
+
+    When audio_markup is True, teaching agents wrap German text in [[de:...]] markers
+    so the CLI can render clickable pronunciation buttons. (Off by default so RELAI
+    simulations see clean transcripts.)
     """
     llm = ChatOpenAI(model=_model(), temperature=0.3)
     router_llm = ChatOpenAI(model=_model(), temperature=0).with_structured_output(_RouteDecision)
     tools = make_tools(store, learner_id)
 
+    def _prompt(name: str, base: str) -> str:
+        if audio_markup and name in _AUDIO_AGENTS:
+            return base + AUDIO_MARKUP_HINT
+        return base
+
     # One ReAct agent per specialist, each with only the tools it needs.
     specialists = {
-        name: create_react_agent(llm, tools[name], prompt=prompt)
+        name: create_react_agent(llm, tools[name], prompt=_prompt(name, prompt))
         for name, prompt in SPECIALIST_PROMPTS.items()
     }
 
