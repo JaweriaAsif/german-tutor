@@ -70,6 +70,7 @@ cp .env.example .env      # set OPENAI_API_KEY=sk-...
 | `TUTOR_DB` | `.german_tutor/progress.db` | progress database path |
 | `TUTOR_TTS_VOICE` | `Anna` | German voice for audio |
 | `TUTOR_TTS_AUTOPLAY` | `1` | set `0` to generate audio without auto-playing |
+| `TUTOR_WEB_HOST` / `TUTOR_WEB_PORT` | `127.0.0.1` / `8000` | web GUI bind address |
 
 ## Run
 
@@ -101,6 +102,21 @@ Willkommen zurück! Level: A2 · last lesson: A2.U5 (step 3) · 7 vocab card(s) 
 You: /resume
 Tutor: Picking up A2.U5 (Perfekt) at step 3 — last time we covered haben vs sein...
 ```
+
+## Web GUI
+
+A browser GUI is included where each German word is a **clickable 🔊 play button**
+(real click-to-play, unlike the terminal):
+
+```bash
+uv run german-tutor-web        # then open http://127.0.0.1:8000
+```
+
+It wraps the same LangGraph tutor and shares the same persistence (resume works
+across the CLI and GUI). Needs `OPENAI_API_KEY` for chat and macOS `say` for audio.
+Override the bind address with `TUTOR_WEB_HOST` / `TUTOR_WEB_PORT`.
+
+Endpoints: `POST /api/chat`, `GET /api/state`, `GET /api/tts?text=…&voice=Anna`.
 
 ## Project layout
 
@@ -173,7 +189,8 @@ model calls run live (not mocked).
 
 ## Notes & limitations
 
-- Terminal output is text + audio playback via `/play`; there is no GUI.
+- Two front-ends: the **CLI** (text + `/play` audio) and the **web GUI** (clickable
+  🔊 buttons) — see *Web GUI* above.
 - Lessons are generated then cached; `/review` and extra practice are intentionally
   fresh each time, while a unit's core lesson stays stable across resumes.
 - Local RELAI files (`.relai/config.toml`, `.relai/simulator.env`, runs, caches) and
