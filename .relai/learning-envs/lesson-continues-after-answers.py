@@ -93,16 +93,17 @@ def mock_speak_german(text: str = "hallo", *args, **kwargs) -> str:
 
 environment = RELAIEnvironment(
     schema_version="relai.learning_environment.v1",
-    id="the-tutot-keeps-asking-if-the-user-wants-the-con",
-    name="Brief Replies Continue Lessons",
-    description="Checks that brief continuation replies keep an active lesson moving instead of resetting to a menu or confirmation prompt.",
+    id="lesson-continues-after-answers",
+    name="Lesson Continues After Answers",
+    description="Checks that after the learner answers a couple of lesson questions in a row, the tutor advances to the next step instead of stopping to ask 'do you want to continue?' or re-listing the menu.",
     tags=TAGS,
     input=FixedInput(
         turns=[
-            FixedTurn(content="/lesson Start my next lesson and teach me one small step at a time."),
-            FixedTurn(content="yes"),
-            FixedTurn(content="next"),
-            FixedTurn(content="continue"),
+            FixedTurn(content="/lesson Start my first lesson and teach me one small step at a time."),
+            FixedTurn(content="Hallo!"),
+            FixedTurn(content="Ich heiße Anna."),
+            FixedTurn(content="Guten Tag!"),
+            FixedTurn(content="Ich komme aus Kanada."),
         ]
     ),
     mocks={
@@ -119,30 +120,29 @@ environment = RELAIEnvironment(
     },
     evaluators=[
         LLMJudgeEvaluator(
-            id="brief-continuation-keeps-momentum",
-            description="Judges whether short continuation replies keep the lesson moving instead of resetting the interaction.",
+            id="lesson-continues-after-answers",
+            description="Judges whether, after the learner answers a couple of questions, the tutor keeps moving instead of asking to continue or re-listing the menu.",
             instructions=(
-                "Evaluate the full transcript for one narrow behavior: when a lesson is already "
-                "in progress, brief learner continuation replies such as 'yes', 'next', or "
-                "'continue' should advance the current lesson rather than stall. Score only this "
-                "lesson-momentum behavior; do not add unrelated criteria such as general "
-                "helpfulness, tone, tool choice, or overall lesson quality.\n\n"
+                "Evaluate the full transcript for ONE narrow behavior: as the learner answers "
+                "the tutor's questions turn after turn, the tutor must keep the lesson moving "
+                "forward. Score only this lesson-momentum behavior; ignore unrelated criteria "
+                "like tone, tool choice, or overall lesson quality.\n\n"
                 "Full-credit behavior:\n"
-                "1. The tutor clearly starts a lesson on the first turn.\n"
-                "2. After each brief continuation reply, the tutor treats it as a signal to keep "
-                "going with the same lesson.\n"
-                "3. The follow-up turns show forward motion, such as teaching the next step, "
-                "giving the next exercise, or giving feedback tied to the current lesson step.\n"
-                "4. The tutor does not reset into concierge behavior, ask a generic 'do you want "
-                "to continue?' question, or re-list an activity menu instead of progressing.\n"
-                "5. The tutor does not simply repeat the same setup or stall without advancing "
-                "the lesson.\n\n"
-                "Deduct points when the tutor treats a brief continuation as vague small talk, "
-                "asks the learner to choose from options again, asks whether to continue instead "
-                "of continuing, or otherwise fails to move the lesson forward. If you deduct "
-                "points, the feedback must name the failed criterion, describe the observed issue "
-                "that triggered the deduction, and state what full-credit behavior would have "
-                "required."
+                "1. The tutor starts a lesson and asks a first question/exercise.\n"
+                "2. After EACH learner answer, the tutor gives brief feedback and then "
+                "immediately presents the NEXT question or teaching step in the same lesson.\n"
+                "3. Across the whole transcript the tutor NEVER stops to ask a standalone "
+                "'do you want to continue?' / 'shall we continue?' / 'ready for the next one?' "
+                "type question — it just continues.\n"
+                "4. The tutor does NOT re-list the activity menu (lesson / vocab / quiz / "
+                "conversation / progress) between questions.\n"
+                "5. The tutor ends each turn with the single next thing it needs from the "
+                "learner (the next question), not a menu or a yes/no confirmation.\n\n"
+                "Deduct points for EACH turn where the tutor asks whether to continue, pauses "
+                "for confirmation before the next question, or re-offers the menu after the "
+                "learner has clearly been answering. Score lower the more often this happens. "
+                "If you deduct, name the offending turn(s), quote the 'continue?'/menu text, and "
+                "state that the tutor should have moved straight to the next question instead."
             ),
             model=MODEL,
         )
