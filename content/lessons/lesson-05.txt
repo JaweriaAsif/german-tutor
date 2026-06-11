@@ -1,0 +1,28 @@
+<< Lektion 4 | Lektion 5 | Lektion 6 >>
+
+
+== Wiederholung ==
+Lesson 5 is a review (Wiederholung) lesson to summarize the German language lessons presented in Lessons 1 through 4. You should, then, return to Lektion 1 and review (that is, reread) each of the four lessons back up to this point.  For a more advanced course, you might now incorporate each of the advanced lessons into this "review" process.  That is: review Lesson 1, then do Lesson 1A, review Lesson 2, then do Lesson 2A, etc.
+
+
+== Parts of Speech and Word Order ==
+Sentences are composed of parts that perform specific functions. You have been introduced to most (but not all) the major parts of speech: pronouns/nouns, verbs, and adjectives; and how these are expressed in German compared with English.  Consider the following:
+Ich brauche Wurst und Käse
+
+I (pronoun as subject) need (verb) sausage and cheese (nouns as direct objects)
+Haben sie zu viel Arbeit?
+
+Have (verb) they (pronoun subject) too much (adjectives) work (noun direct object)?
+Word order in a simple sentence follows that used in English. Subject and verb are reversed to form a question. In English, but not in German, the question sentence could also be stated (and, in fact, occurs more often in the US) as 'Do they have too much work?'
+
+
+== Nouns ==
+Nouns are words that typically occur in sentences as either subjects (performers of some action) or objects (recipients of some action). Most nouns are the name of either a "person, place, or thing" and, in German, are always capitalized.  Every noun in German has an "assigned" gender (masculine, feminine, neuter), and we learn each noun with its nominative case, definite article (der, die, das, respectively) in order to also learn that gender.  Thus, a Vokabeln section for nouns is presented thusly:
+
+der Anhang, die Anhänge      appendix, appendices      (singular and plural)
+die Brücke                   bridge
+der Freund, die Freunde      friend, friends           (singular and plural)
+das Gespräch, die Gespräche  conversation, conversations
+die Grammatik                grammar                   (note irregular stress) 
+die Lektion                  lesson                    (note irregular stress)
+die Straße                   street

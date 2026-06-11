@@ -1,0 +1,125 @@
+<< Lesson 3 | Lektion 4 | Lektion 5 >>
+
+
+== Lesestück 4-1 ~ Eine Geschichte über Zürich ==
+Zürich ist die größte Stadt der Schweiz. Sie liegt am Ausfluss des Zürichsees und ist die Hauptstadt des gleichnamigen Kantons, des Kantons Zürich. Zürich ist ausgesprochen schön gelegen, am nördlichen Ende des Zürichsees—bei klarem Wetter hat man eine gute Sicht auf die Glarner Alpen.
+Zürich ist das Zentrum der schweizer Bankenwirtschaft. Neben den beiden Großbanken ('Credit Suisse' und 'UBS') haben auch etliche kleinere Bankinstitute ihren Sitz in der Stadt.
+Although this short story contains quite a number of impressive German nouns and adjectives, with the aid of Vokabeln 4-1 following you should have no trouble reading and understanding it. The passage makes considerable use of the German genitive case (English possessive case), which you have not yet learned. However, a clue applicable here: translate des as "of the" or "of" and note there are other der-words that also mean "of the".
+
+
+== Vokabeln 4-1 ==
+ die Alpen               Alps
+ der Ausfluss            outlet, effluence           (of a lake)
+ die Bankinstitute       banking institutes
+ die Bankenwirtschaft    banking business
+ das Ende                end
+ die Großbanken         major banks
+ die Hauptstadt          capital city
+ das Haus                house
+ der Kanton              canton                      (Swiss state)
+ das Lesestück           reading passage
+ die Schweiz             Switzerland
+ die Sicht               view
+ der Sitz                office
+ das Wetter              weather
+ das Zentrum             center (centre)
+ das Zürich              Zurich                      (city and canton in Switzerland)
+ der Zürichsee           Lake Zurich
+
+ d.h. (das heißt)        i.e. ("that is" in Latin)
+ Glarner Alpen           Glarner Alps
+ man hat...              one has... 
+ nach Hause              (toward) home               (compare: zu Hause = "at home")
+
+ anrufen                 call, telephone
+ geben  (gab, gegeben)   give
+ kommen (kam, gekommen)  come
+ liegen (lag, gelegen)   lie (lay, lain)
+
+ am (an dem)             at the
+ ausgesprochen           markedly
+ bei                     in
+ beiden                  two
+ etliche                 a number of, quite a few, several
+ gleichnamig             same named
+ größte                  largest
+ klar                    clear
+ klein                   small
+ neben                   besides
+ nördlich                northern
+ schweizer               of or pertaining to Swiss
+ 
+
+Pronunciation Guide >>
+
+
+== Grammatik 4-1 ~ Introduction to adjectives ==
+An adjective is a part of speech which can be thought of as a "describing word"—typically, an adjective modifies a noun. In both English and German, adjectives come before the noun they describe or modify. In many other languages (such as French) they usually come after the noun. Here are some examples of adjectives (underlined) you have already encountered:
+
+Because nouns are capitalized in German, it is fairly obvious in these sentences where the adjectives occur: just before the nouns they modify. Note how the endings on German adjectives can change, depending upon the noun (keinen Käse; klarem Wetter; gute Sicht)—specifically, the gender and case of the noun they are modifying.  Before explaining the basic rules governing adjective endings, you need to have a better understanding of person, gender, and case in German nouns—concepts that will be explored in the next few lessons.
+Finally, realize that the ordinal numbers you learned in Lektion 3 are, in fact, adjectives—subject to the same rules governing word endings for adjectives.
+
+
+== Gespräch 4-1 ~ Das neue Mädchen ==
+Markus und Helena sind Freunde.
+Markus: Lena, wer ist das neue Mädchen? Die Brünette dort drüben. 
+Helena: Ich glaube, sie heißt „Karoline“. 
+Markus: Sie ist sehr schön.
+Helena: Sie ist hübsch, wenn man kleine Mädchen mit langen dunklen Haaren mag.
+Markus: Ja. Ihre Haare gefallen mir sehr.
+Helena: Markus, du bist ein Ferkel!
+This short conversational passage contains more examples of adjectives.
+
+
+== Vokabeln 4-2 ==
+die Brünette             brunette
+die Haare                hair(s)
+das Mädchen              girl
+das Ferkel               piglet 
+
+gefallen                appeal to
+glauben                  believe
+heißen                   name, call
+mag                      like, desire, wish
+
+dort                     there
+(dort) drüben            over there
+dunkel                   dark
+ihr                      her
+hübsch                   cute
+klein                    short
+lang                     long
+neue                     new
+wenn                     if
+wer?                     who?
+
+Pronunciation Guide >> 
+
+
+== Grammatik 4-2 ~ Nouns and pronouns in the accusative and dative ==
+As was noted previously when the concept of case was introduced for pronouns (Grammatik 2-2), there are four cases used in German. Recall that the nominative case in German corresponds to the subjective case in English and applies to nouns and pronouns used in a sentence as the subject of a verb. Nouns (and pronouns) that are used as objects of transitive (action) verbs are in the English objective case.  If these are direct objects (recipients of the action of a verb), then these nouns are in the accusative case in German.  If indirect objects, then these nouns are in the dative case in German.  Essentially, the English objective case is divided, in German, into an accusative case used for direct objects and a dative case used for indirect objects.
+
+
+=== Pronouns ===
+For comparison with English, recall that the singular personal pronouns (nominative case) are "I", "you", and "he/she/it" (1st, 2nd, and 3rd persons). The objective case, personal pronouns in English are "me", "you", and "him/her/it"—and are used for both direct and indirect objects of verbs. For example:
+
+He gives it [the Direct Object] to me [the Indirect Object].
+The German accusative case, personal pronouns (singular) are: mich, dich, ihn/sie/es. The German dative case, personal pronouns (singular) are: mir, dir, ihm/ihr/ihm. Thus, the above English example sentence becomes, in German:
+
+Er gibt es [the Direct Object] mir [the Indirect Object].
+Because mir is a dative pronoun, there is no need in German to use a modifier as in English, where "to" is used as a signal of an indirect object.  The following table summarizes the German pronouns in three cases for both singular and plural number:
+
+* Polite form
+Recall from Gespräch 2-1 the "incomplete" sentence Und Ihnen? ('And you?'). Note that the pronoun agrees in case (here, dative) with the implied sentence — Und wie geht es Ihnen? The same rule is evident in Gespräch 1-1 (Und dir?). Such agreement is important to convey the correct meaning. Tables giving the German personal pronouns in all cases can be found in an appendix:  Pronoun Tables.
+
+
+=== Nouns ===
+Nouns do not change their form (spelling) relative to case in German; instead, a preceding article indicates case. You have learned the nominative case definite and indefinite articles (Grammatik 3-3: der, die, das and ein, eine. ein) for each of the three noun  genders. Now we will learn the accusative (used to signal a direct object) and dative (used to signal an indirect object) articles. First, the definite articles:
+
+This table might seem a bit overwhelming (and there is yet one more case in German: the genitive!), but some points to note can make memorizing much easier.  First, as you can see from the table, gender does not really exist for plural nouns.  No matter what the noun gender in its singular number, its plural always has the same set of definite articles: die, die, den for nominative, accusative, and dative cases. The plural der-words are similar to the  feminine singular der-words, differing only in the dative case. Another point: the dative for both masculine and neuter nouns is the same: dem. Finally, for feminine, neuter, and plural nouns, there is no change between nominative and accusative cases. Thus, only for masculine nouns is there a definite article change in the accusative compared with the nominative.   
+The following examples demonstrate the use of the definite article in various parts of speech:
+
+In the last example, you need to know that in both English and German, the noun (or pronoun) that follows the verb 'to be' is a predicate noun, for which the correct case is the nominative. That is why, in English, 'It is I' is grammatically correct and 'It is me' is simply incorrect. 
+The indefinite articles are as follows:
+
+Of course, there are no plural indefinite articles in German or English (ein means "a". "an", or "one").  It is important to see that there is a pattern in the case endings added to ein related to the der-words in the definite articles table above.  For example, the dative definite article for masculine nouns is dem—the indefinite article is formed by adding -em onto ein to get einem.  The dative definite article for fe

@@ -1,0 +1,122 @@
+<< Lesson 1 | Lektion 2 | Lektion 3 >>
+
+Fremde und Freunde ~ Strangers and Friends
+
+
+== Grammatik 2-1 ~ Introduction to Verbs ==
+A verb is that part of speech that describes an action. Verbs come in an almost bewildering array of tenses, aspects, and types.  For now, we will limit our discussion to verbs used in the present tense — i.e., describing an action occurring in the present. You should start to recognize that the form a verb takes is related to the subject of that verb: the verb form must match the person of the subject. This requirement is sometimes evident in English, but always so in German. Consider the following English and German sentences (the verb is studieren in every case):
+
+Several things are illustrated by these sentence pairs. First, all verbs in German follow the rule just stated that a verb form must agree with its subject. Starting in Lektion 6 we will learn the verb forms associated with each person in German. Second, this rule in English applies mostly to the verb 'to be' (e.g., I am, you are, he is, etc.). In some English verbs, the 3rd person singular form is unique, often taking an 's' or 'es' ending: "I give at the office", but "He gives at the office" (and "She studies..." above).  Finally, some German verbs are best translated with an English 'to be' verb form added. This is called the progressive form in English ('What are you studying?'), but it does not exist in German. Thus, a verb like nennen can best be translated as "to name" or "to call". The following example may make this clearer. In the present tense, the following statements in English:
+
+'They are calling the corporation, "Trans-Global"'
+'They name the corporation, "Trans-Global"'
+'They call the corporation, "Trans-Global"'
+'They do call the corporation, "Trans-Global"'
+are all expressed in German in only one way: Sie nennen die Firma, "Trans-Global".
+And the question statement: 'Do they call the corporation, "Trans-Global"?' becomes, in German: Nennen sie die Firma, "Trans-Global"?
+
+
+== Grammatik 2-2 ~ Pronouns in the Nominative Case ==
+Most of the personal pronouns introduced in Lektion 1 are used as subjects of their verbs. These represent the nominative case in German (as in English). We will shortly learn three other cases in German: the accusative for direct objects, the dative for indirect objects, and the genitive for expressing possession. For now, remember that the singular personal pronouns in English (nominative case) are "I", "you", and "he/she/it" (1st, 2nd, and 3rd persons) and the nominative case is used as the subject of a verb. In German, these pronouns are rendered as ich, du, and er/sie/es. In these example sentences, the subject of the verb is underlined:
+
+There are, of course, plural personal pronouns in the English nominative case: "we", "you", and "they"; and in German, these nominative case pronouns are wir, ihr, and sie. These appear in the following examples (again, subject underlined):
+
+In both English and German, the 3rd person singular also has gender. As you will next learn, the 2nd person (person being addressed) in German has both familiar and polite (formal) forms. Further, it is worth repeating here — although introduced in Grammatik 2-1 above and to be covered in detail in future lessons — that the verb form changes when the subject changes. That is, in German the verb form must match the subject of a sentence. Here are some examples; compare with the previous three example sentences above and note how the verb form changed to match the sentence subject (subject and verb underlined):
+
+In the last example, the English verb form ('have') also changed based upon the subject of the sentence.
+
+
+== Gespräch 2-1 ~ Die Geschäftsleute ==
+Herr Schmidt trifft Frau Baumann. Sie sind Geschäftsleute und sie arbeiten an dem Hauptsitz.
+Herr Schmidt:    Guten Tag, Frau Baumann!
+Frau Baumann: Guten Tag, Herr Schmidt!
+Herr Schmidt:    Wie geht es Ihnen?
+Frau Baumann: Sehr gut, danke. Und Ihnen?
+Herr Schmidt:    Auch gut.
+Frau Baumann: Schön. Haben Sie Herrn Standish schon getroffen?
+Herr Schmidt:    Aus England? Nein. Ist er zu Besuch?
+Frau Baumann: Ja. Das ist richtig! Auf Wiedersehen, Herr Schmidt!
+Herr Schmidt:    Auf Wiedersehen, Frau Baumann! 
+In this conversation, although the subject matter is basically casual, a more formal form of German is being used intoning respect between coworkers in an office setting. The polite form is expressed by the pronouns as explained below (Grammatik 2-3).
+
+
+== Vokabeln 2-1 ==
+die Anleitungen          instructions
+das Deutsch              German (language)         (more common is die deutsche Sprache)
+der Fremde               foreigner, stranger
+die Firma                company, firm, business concern
+die Frage                question
+die Geschäftsleute       business people           (die Leute = people)           
+der Hauptsitz            head office               (das Haupt = head or chief)
+der Tag                  day, daytime
+
+aus England              from England
+Das ist richtig!         That is right!
+Frau Baumann             Ms. Baumann
+Herr Schmidt             Mr. Schmidt
+zu Besuch                visiting
+
+arbeiten                 work
+getroffen                (have) met                (past participle of treffen)
+nennen                   name, call
+
+alle                     all
+an                       at
+Ihnen                    (with or to) you          (polite form)
+heute                    today
+ihr                      you (plural), you all
+ja                       yes
+nein                     no
+richtig                  correct
+sie                      they                      (note: also "she")
+Sie                      you                       (polite form)
+wir                      we
+
+Pronunciation Guide >> 
+
+
+== Grammatik 2-3 ~ Familiar and Polite Pronoun Forms ==
+Many pronouns were introduced in Lesson 1. In Grammatik 2-1 and Gespräch 2-1 we have been presented with the following additional pronouns:
+
+ Ihnen – (to) you    (2nd person singular, dative case)
+ ihr – you      (2nd person, plural, nominative case)
+ sie – they     (3rd person, plural, nominative case) 
+ Sie – you      (2nd person, singular, nominative case)
+ wir – we       (1st person, plural, nominative case)
+
+In the conversations between friends presented in Gespräche 1-1 and 1-2 (Lektion 1) the familiar form of the personal pronouns (e.g., du, dir) was used.  However, German also has a polite or formal form of some of these personal pronouns. The polite form is used in conversations between strangers and more formal situations, as illustrated in the Gespräch 2-1: greetings between business associates.
+The polite form is always first-letter capitalized in German, which can be helpful in differentiating Sie (you) from sie (she and they); Ihnen (you) from ihnen (them).  However, you will soon learn that the form of the verb (see Grammatik 2-3 below) is most telling, as shown by these example pairs using the verb, haben (have):
+
+Because the first letter in a sentence is always capitalized, we cannot determine (without the verb form) whether the second and third examples begin with sie ('she' or 'they') or with Sie (polite 'you'); a problem that would also exist in conversation. The fourth example, where subject and verb are reversed in a question, demonstrates the pronoun 'they'; compare it with the polite 'you' in the first example. 
+It is relatively easy for an English speaker to appreciate how context, especially in conversation, overcomes confusion considering that English has fewer forms for these pronouns than German. However, this fact does present some difficulty when learning German, since improper use of a pronoun may just create confusion in speaking or writing German.
+
+
+== Gespräch 2-2 ~ Die Geschäftsmänner ==
+Herr Schmidt und Herr Standish begegnen sich am Hauptsitz:
+
+Herr Schmidt: Guten Morgen, Herr Standish! Wie geht es Ihnen?
+Herr Standish: Danke sehr, es geht mir gut. Und Ihnen?
+Herr Schmidt: Nicht so gut. Ich bin müde.
+Herr Standish: Wie bitte? Müde? Warum?
+Herr Schmidt: Ich habe so viel Arbeit.
+Herr Standish: Das kann ich verstehen. Zu viel ist zu viel.
+Herr Schmidt: Das ist richtig. Auf Wiedersehen, Herr Standish! 
+Herr Standish: Auf Wiedersehen, bis morgen.
+
+
+== Vokabeln 2-2 ==
+die Bundesrepublik Deutschland Federal Republic of Germany
+die Geschäftsmänner            businessmen            (die Geschäftsleute is preferred)
+Großbritannien                 Great Britain          (technically Vereinigtes Königreich
+                                                       von Großbritannien und Nordirland)
+der Morgen                     morning
+die Übersetzung                translation
+
+bis morgen                     until tomorrow
+Guten Morgen!                  Good morning           (greeting)
+nicht so gut                   not so well
+so viel                        so much
+Wie bitte?                     How is that?
+zu viel                        too much
+
+bis                     

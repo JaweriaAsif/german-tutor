@@ -1,0 +1,168 @@
+Lessons: 
+ Level I • 
+ Level II • 
+ Level III 
+ Level IV 
+ Level V 
+
+Grammar • 
+Appendices • 
+About (including print versions) • 
+Q&A • 
+
+Planning
+
+
+== The Alphabet ==
+Like English, the German alphabet consists of 26 basic letters. However, there are also combined letters and three umlauted forms. An umlaut is the pair of dots placed over certain vowels; in German, Umlaut describes the dotted letter, not just the dots. 
+As in English, letters may be pronounced differently depending on word and location. The first column is the German letter, the second describes the IPA pronunciation and rough English approximation of the letter name. The third gives an English word that matches or approximates the German letter sound.
+Reading down this column and pronouncing the "English" words will recite the alphabet auf Deutsch ("in German"). Note that letter order is exactly the same as in English, but pronunciation is not for many of the letters. In the list of pronunciation notes, no entry means essentially "pronounced as in English".
+
+
+=== Unique German Letters ===
+
+
+==== Umlaut Letters ====
+Umlauts were originally written as 'ae', 'oe', and 'ue'.
+
+
+==== The ss-Ligature, ß ====
+
+
+==== Combined Letters ====
+
+eu and äu both sound like the oy in b"oy"
+
+Notes:
+•There is no uppercase ß.
+•All vowels (withot umlauts) are pronounced like those in Spanish, but in Spanish the long ones are pronounced much shorter in Spanish.
+•In German you capitalize these:
+
+Nouns (and words used as nouns)*
+Beginning of a sentence.
+The word "Sie", but only meaning you in the formal sense, and its forms.
+•Modern German, Luxembourgish, and Bavarian are the only languages in the world that capitalizes every noun.
+•Also, the only English word that is always capitalized whose German translation (unless it starts a sentence) is not capitalized is the pronoun "I".
+•in a title, like in Spanish only the first word and other "always" capitalized words are capitalized
+
+Expect names of italicized letters: das a or das A.
+The silent letters in German appear in five situations:
+• H after a vowel or T
+• First letter of double consonants, ck, and tz*
+• E after I, in which I is always long
+• Final W.
+• D before the T
+Vowels are long with one consonant after it, and short with two.
+But…
+A is always short
+Diphthongs are long
+Compound words are broken up: Weg|weiser
+Borrowed and short words may break this rule.
+Any following H's: Tuch, John, Sohn, Joshua, Buch have a long vowel sound.
+In French loanwords, if a vowel is followed by a nasal consonant in the same syllable, then the nasal consonant will be silent and the vowel will be nasal. A nasal vowel produces air through your mouth and your nose. 
+A double vowel is long, except for AA (see above)
+
+
+=== Konsonanten ~ Consonants ===
+Most German consonants are pronounced similarly to the way they are pronounced in English, with exceptions noted in column 3 above. Details of certain consonant sounds and uses are discussed further here.
+
+d, t, l, and n – In German, these letters are pronounced with the tongue extended up to the back of the base of the teeth, creating a more dental sound. As noted above, 'd' is a 'dental d' except at the end of a word or before a consonant (except an R), where it becomes a 'dental t'.
+Note that as above, L only uses the front of your tongue, just like in Spanish or French, which is similar to the L in Laugh.
+
+sch – this combination is pronounced like 'sh' /ʃ/, not 'sk' as in English. A German example is Schüler /ˈʃyːlɐ/ (student).
+sp and st – Where these combinations appear at the beginning of a word or syllable, the 's' sound becomes an 'sh' /ʃ/ sound, while the next letter is pronounced the same as itself in English and German. German examples are spielen /ʃpiːlən/ (play) and Stelle /ˈʃtɛlə/ (place).
+
+
+=== German Sounds not found in English ===
+There are sounds in the German language that have no real equivalent in the English language. These are discussed here.
+
+r – Most Germans pronounce 'r' as /ʁ/, a guttural sound the g in amigo.
+ö (read as oh-umlaut) – This vowel is pronounced similarly to the 'u' in the word 'murder' (spoken with a British accent), but with the lips rounded. Commonly, the 'long ö' /øː/ is made by first sounding 'oo' as in moon, then pursing the lips as if to whistle, and changing the sound to 'a' as in 'late'. An example of "long ö" is schön /ʃøːn/ (beautiful). The 'short ö' sound /œ/ is made by first sounding 'oo', pursing the lips, and changing the sound to 'e' as in 'pet', and it sounds very similar to the 'i' in 'sir'. An example of the "short ö" is zwölf /t͡svœlf/ (twelve). If you have problems pronouncing ö, do not replace it by 'o' but by 'e' (as in elf), which occurs in some German dialects. In written and printed German, 'oe' can be an acceptable substitute for 'ö' if the latter is unavailable.
+ü (read as oo-umlaut) – As with 'ö', 'ü' is a rounded vowel sound with no real English equivalent. The 'long ü' /yː/ is made by first sounding 'oo' as in moon, then pursing the lips as if to whistle, and changing the sound to 'ee' as in 'seen'. A simpler approach is to simply shape your lips and tongue as if you are going to whistle, and then put some voice. An example of "long ü" is früh /fʁyː/ (early). The "short ü" sound /ʏ/ is made by first sounding 'oo', pursing the lips, and changing the sound to 'i' as in 'pit. An example of "short ü" is fünf /fʏnf/ (five). If you have problems pronouncing ü, do not replace it by 'u' but by 'i' (as in fish), which occurs in some German dialects. In written and printed German, 'ue' can be an acceptable substitute for 'ü' if the latter is unavailable.
+ß looks like a B but be aware of the five warnings, which are as follows:
+•It always sounds like an S.
+•It can't be the first letter of a word.
+•It always follows a vowel.
+•It doesn't have an uppercase version.
+•It looks like a Greek letter, the 
+  
+    
+      
+        β
+      
+    
+    {\displaystyle \beta }
+  
+, but never replace it with the Greek letter 
+  
+    
+      
+        β
+      
+    
+    {\displaystyle \beta }
+  
+.
+
+ach – When 'ch' is not preceded by ä, ö, ü, l, n, r, e, i, y, eu, äu, or s it sounds like the x in the country México, when spoken by a Spanish-speaking person.
+Ich has a meaning by itself: it means me. When ig is at the end of the word, it also sounds like the pronoun ich in German!
+Audio: OGG ~ ach | OGG ~ ich auch | OGG ~ richtig
+
+
+=== Syllable Stress ===
+The general rule in German is that words are stressed on the first syllable. However, there are exceptions. Almost all exceptions are of Spanish or French origin. For those borrowed from French it will  generally stressed on the last syllable, for example, Vokal, Konsonant, and Lektion (vowel, consonant, lesson). In loanwords from Spanish, however, the stress is generally on the next-to-last syllable if it ends in N, S, or a vowel and the last one otherwise.
+These words (not stressed on the first syllable) appear in the (Level II and III) lesson vocabularies as Vokal, Lektion (in some regions: Lektion), etc.
+Words starting in common prefixes (ge-, be-, ver-, etc.) stress the syllable following said prefix. Examples are Gemüse, Beamte, and Vereinigung.
+Also, the German word "Ski" means "ski" and is spelled "ski" but it is actually pronounced like the pronoun "She" in English.
+Notice that we have genders in German, masculine, feminine, neutral. English doesn't have genders. Also as mentioned above, all nouns are capitalized in German, Bavarian and Luxembourgish.
+And finally, we saw that in words of French origin the letter J, as well as the letter G (before E or I) makes the sound of S as in vision, which is the English J sound without the initial D, and the IPA is this: /ʒ/, a very rare sound in both German and English.
+Example: In Garage the first G is pronounced the same as how it is pronounced in English, while the second one is pronounced /ʒ/ because it comes before an E, and the word has a French origin.
+Again, remember that this sound is very rare in both of these languages. Don't forget the 
+  
+    
+      
+        
+          
+            
+              
+              ¨
+            
+          
+        
+      
+    
+    {\displaystyle {\ddot {}}}
+  
+, which will go on back vowels only and move the sound from the back to the front, except for AU. The AU sounds like ow as in cow, while the ÄU sounds like the oy in boy. The 
+  
+    
+      
+        
+          
+            
+              
+              ¨
+            
+          
+        
+      
+    
+    {\displaystyle {\ddot {}}}
+  
+ may not appear on the A in the AI or AY diphthongs. Last the A, which is always short, except in a diphthong and as 
+  
+    
+      
+        
+          
+            
+              A
+              ¨
+            
+          
+        
+      
+    
+    {\displaystyle {\ddot {A}}}
+  
+, as well as long vowels without double-dots on top, are pronounced like those in Spanish, but the Spanish vowel sounds are pronounced short, while in German, all of them 

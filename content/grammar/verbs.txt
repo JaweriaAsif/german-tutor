@@ -203,4 +203,32 @@ see:    irregular   sehen:    irregular
 buy:    irregular   kaufen:   regular
 get:    irregular   bekommen: irregular ;-)
 
-Regular verbs are much more frequent than irregular ones, but a lot of the irregular
+Regular verbs are much more frequent than irregular ones, but a lot of the irregular verbs are used very frequently, for instance haben, sein, gehen, kommen etc.
+When in doubt whether a verb is irregular or not, it is best to look it up in a dictionary (See below).
+
+
+=== Haben or sein as auxiliaries ===
+Whether a verb is irregular or not does not influence the choice of auxiliary.
+Most verbs take haben as auxiliary. 
+A) Verbs which take an accusative object (transitive verbs)
+B) Reflexive verbs always take haben as auxiliary.
+Examples A:
+
+trinken: Er hat ein Bier getrunken.
+lesen:   Sie hat ein Buch gelesen
+kochen   Sie haben gestern Spaghetti gekocht.
+
+Examples B:
+
+sich freuen   Ich habe mich gefreut
+sich kämmen   Er hat sich gekämmt
+sich ärgern   Wir haben uns schon lange nicht mehr so geärgert.
+
+The auxiliary sein is taken by verbs that describe 
+
+C) the relocation from one place to another or
+D) the change of a state
+and with
+E) sein (be) and bleiben (stay)
+Note: none of the verbs from groups C-E is combined with an accusative object.
+Examples C: relocation verbs

@@ -57,6 +57,13 @@ MOMENTUM = (
     "learner asks what else they can do."
 )
 
+GROUND_HINT = (
+    " Ground your teaching in real material: call get_lesson_material(topic) to pull "
+    "the live Wikibooks German-course text for the current grammar point/topic, and "
+    "base your explanation and examples on it (adapted to the learner's level). Do "
+    "not invent grammar rules; if the material doesn't cover something, say so."
+)
+
 Route = Literal[
     "placement", "lesson", "grammar", "vocab", "exercise",
     "conversation", "progress", "concierge", "offtopic",
@@ -93,12 +100,12 @@ SPECIALIST_PROMPTS: dict[str, str] = {
         "text with unexplained German, even if you say you will explain it later. "
         "If an example needs extra German words, gloss each new item immediately or "
         "replace the example with one that only uses already-explained German. Keep "
-        "the step small but not skeletal. " + LEVEL_RULE + TTS_HINT + MOMENTUM
+        "the step small but not skeletal. " + LEVEL_RULE + TTS_HINT + MOMENTUM + GROUND_HINT
     ),
     "grammar": (
         "Explain the requested grammar point for the learner's level: a short rule, "
         "2-3 example sentences with English glosses, and one common pitfall. Offer to "
-        "drill it afterwards. " + LEVEL_RULE + TTS_HINT
+        "drill it afterwards. " + LEVEL_RULE + TTS_HINT + GROUND_HINT
     ),
     "vocab": (
         "Teach or review vocabulary. For new words use add_vocab (include the article "

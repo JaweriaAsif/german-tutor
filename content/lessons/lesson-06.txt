@@ -1,0 +1,95 @@
+<< Lektion5 | Lektion 6 | Lektion 7 >>
+
+Die Wohnung ~ The Apartment
+
+
+== Gespräch 6-1 ~ Ein Bruder besucht Markus ==
+Markus studiert Biologie an der Universität. Er besucht die Vorlesungen und dann geht er nach Hause. Er wohnt nicht bei seinen Eltern; er mietet sich eine kleine Wohnung. Sie hat nur drei Zimmer. Gegen Abend zeigt er sie seinem Bruder.
+Markus: Karl. Herein!
+Karl:     Tag, Markus! Mutti grüßt dich.
+Karl sieht sich um.
+Karl:      Mir gefällt deine Wohnung.
+Markus: Danke. Sie hat drei Zimmer. Es gibt eine Küche, ein Wohnzimmer, und ein Schlafzimmer.
+Karl:     Ich habe sie gern! 
+Markus:
+This incomplete story and conversation introduces terms for items around the house (or apartment).
+
+
+== Vokabeln 6-1 ==
+der Bruder                brother
+die Eltern                parents
+die Küche                 kitchen
+das Schlafzimmer          bedroom
+die Vorlesung             class, instruction            (at a university)
+die Wohnung               apartment, flat
+das Wohnzimmer            living room
+das Zimmer, die Zimmer    room(s)
+
+es gibt                   there is
+gegen Abend               towards evening
+gern haben                like                          (i.e., "to  gladly have")
+Herein!                   Come in!
+sich umsehen              look around
+
+zeigen                    show
+besuchen                  visit, attend                 (classes)
+grüßen                    greet
+mieten                    rent
+
+sein                      his                           (a possessive adjective)
+
+
+== Grammatik 6.1 ~ Introduction to verb conjugations ==
+In German, every grammatical person has, or potentially has, its own unique verb form. Describing the various verb forms is called verb conjugation. This variation in verb form is certainly one of the things that makes German grammar somewhat difficult for English speakers to learn. In English, only the 3rd person singular might differ from the verb form used with all of the other persons (see Grammatik 1-3) and that difference is made by adding an ending of 's' or 'es'. For example: I/you/we/they 'go', but he/she/it 'goes'. 
+Let us have a closer look at German verbs. Usually, the infinitive form of a verb in German ends with -en—for examples, consider these verbs you have already learned: gehen ('go'), haben ('have'), and studieren ('study'). In order to "build" the different verb forms (that is, conjugate a verb), first cut off the '-en' ending from the infinitive. Then append a new ending according to the grammatical person. For regular verbs it works essentially as follows:
+
+As you see in this example using the verb gehen, the singular 1st person ends with -e, the 2nd person with -st and 3rd person (no matter what gender) ends with -t. As for the plural forms, note that 1st and 3rd person in plural number (see Grammatik 1-3) are built the same way as the infinitive. Again note that, in English, only the verb form for the 3rd person singular is "unique". An easy way to remember the regular verb endings is the following mnemonic "Elephants standing together enjoy trumpeting endlessly".
+Seems simple enough.  However, realize we are discussing here only the regular verb forms in the present tense (Präsens).
+You will learn quite soon that, unfortunately, there are many exceptions from these simple rules. An important one is the irregular verb sein ('to be') which is irregular in English as well (I am, you are, he is...).
+
+At least 1st and 3rd person plural are the same.
+Another important verb is haben ('to have'): 
+
+You see, it's not too irregular—only the 2nd and 3rd person singular constitute a small exception since the 'b' has vanished.  English is somewhat curious in this respect as well: 'I have', but 'he has'.  Future lessons will introduce you to the many irregular verbs in German.  But you should now recognize what is happening to the verbs in German sentences. They are reflecting the person and number of their nominative case subjects. Recall these sentences from past lessons (verbs underlined here):
+
+  Danke, es geht mir gut                 Thanks, it goes well with me (verb is gehen)
+  Ich habe viel Arbeit                   I have much work (verb is haben)
+  Ist er zu Besuch?                      Is he visiting? (verb is sein)
+  Du bist ein Schwein!                   You are a pig! (verb is sein)
+  Wie heißen Sie?                        What are you called? (verb is heißen, and pronoun is formal)
+  Wir spielen eine Stunde lang!          We play for one hour! (verb is spielen)
+  Sie liegt am Ausfluss des Zürichsees.  It lies at the outlet of Lake Zurich (verb is liegen)
+
+
+== Grammatik 6.2 ~ Case in German nouns ==
+Through our discussions on the personal pronouns, you have learned how  pronouns have case.  Nouns also have case—and in German, noun case can be expressed by the definite article (der). Recall this table from Lektion 3:
+
+These der-words reflect noun gender in the nominative case—appropriate whenever a noun is used as the subject of a sentence. For other cases, the der words change. Expanding the table to present nominative (NOM.), accusative (ACC.), dative (DAT.), and genitive (GEN.) cases:
+
+Note, there are also der-word forms to be used for plural nouns. Fortunately, these are the same, no matter what the gender of the singular noun. For future reference, you can find the der-words summarized in Anhänge Drei.
+The following examples demonstrate the use of the definitive article in various parts of speech:
+
+  Du hast die Wurst und den Käse.          You have the sausage and the cheese.
+                                            (accusative case)
+  Die Geschäftsleute verstehen die Arbeit  The business associates understand the work.
+                                            (nominative and accusative cases)
+  Sie liegt am Ausfluss des Zürichsees.    It lies at the outlet of (the) Lake Zurich.
+                                            (genitive case)
+  Zürich ist die größte Stadt der Schweiz. Zurich is the largest city in (of the) Switzerland.
+                                            (nominative and genitive cases)
+
+In the last example, remember that in both English and German, the noun (or pronoun) that follows the verb 'to be' is a predicate noun, for which the correct case is the nominative. That is why, in English, 'It is I' is grammatically correct and 'It is me' is  incorrect. So consider the following (and note that case of each definite article is the same as in the last example above):
+
+  Zürich ist der Kanton der gleichnamigen Stadt.  Zurich is the canton of the same named city.
+
+
+== Grammatik 6.3 ~ Commands ==
+  Ruf sie an, bitte!         Call her, please.
+  or Ruf sie bitte an!
+  Gehen Sie nach Hause!      Go home (formal).
+  Kommt mit!                 Come with (plural)!
+  Gib es mir!                Give me it!
+
+Notice that in these sentences there are no subjects (except for #2). In German, as in English, there is a commandative form, a way to demand something using an understood you. In English, there is only one you-form and one command form. In German, since there are three you's, there are three ways to command.
+If the subject is singular (du), then the verb has no ending. If it is irregular, it takes the du-form, such as in essen (Iss!) or lesen (Lies!). If there is a plural subject (ihr), then the verb takes the ihr-form. Nothing else is changed. Most of the time, ihr-commands are used with children, but that is not always the case. In both of these sentences, the du or ihr is omitted.
+Formal is normal. The Sie stays (after the verb) and the verb is in its formal form. Although it is worded like a question, in written or spoken form, it is easy to tell the difference.

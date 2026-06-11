@@ -1,0 +1,106 @@
+<< Lesson 2 | Lektion 3 | Lektion 4 >> |
+
+Die Zahlen ~ The Numbers
+
+
+== Lektion 3 ~ Zählen von 1 bis 12 ==
+Counting in any language is a valuable skill best learned early on. In German as in English, there are both cardinal (counting) and ordinal (place or order) numbers, and number formation is similar in that the first twelve numbers are unique. Above twelve, numbers are formed by combination. For example, 13 is dreizehn and 14 is vierzehn.  Higher numbers will be the subject of later lessons.
+Note in the table how ordinals are formed from the cardinals in German by adding te. 'Ten' becomes 'tenth' in English; zehn become zehnte in German.  As in English, there are several nonconforming variants: erste, dritte, and siebte. 
+
+Audio: OGG (385KB)
+
+
+== Grammatik 3-1 ~ Telling time (hours) ==
+Knowing the numbers from 1 to 12, you can now begin asking and telling time in German.
+
+
+=== Gespräch 3-1 ===
+Zwei Jungen, Heinrich und Karl, sind Freunde. Sie begegnen sich eines Nachmittags.
+Heinrich:  Karl. Wie geht's?
+Karl:        Hallo!
+Heinrich:  Willst du spielen? Ich habe einen Ball.
+Karl:        Wie spät ist es?
+Heinrich:  Es ist ein Uhr.
+Karl:        Dann kann ich bis zwei Uhr spielen.
+Heinrich:  Das ist gut. Wir spielen eine Stunde lang!
+Asking for the time is accomplished by the sentence: Wie spät ist es? ("How late is it?"). The answer places the hour in the line Es ist ____ Uhr ("It is __ o'clock"), substituting the correct cardinal value (except ein is used instead of eins). One could also ask: Wieviel Uhr ist es? (not used very often anymore) or respond Es ist eins or Es ist drei, etc.—which may be imprecise, unless the time is close to the hour. The following sentences also relate to telling time:
+
+* this is only regional - many Germans may not understand
+Knowing how to express the quarter, half, and three quarter hours will allow you to give the time more precisely. We will, of course, revisit this subject. Once you know how to count beyond twelve, the hour's division into 60 minutes can be expressed. Also, Germans (like most Europeans) utilize what is known in America as "military time" or a 24-hour clock.
+
+
+== Vokabeln 3-1 ==
+Also included in the vocabulary for Lesson 3 are the ordinal and cardinal numbers 1 through 12 from Lektion 3 above.
+
+der Ball                   ball
+der Junge, die Jungen      boy, boys
+das Lernen                 learning, study
+der Nachmittag             afternoon
+die Stunde                 hour
+die Uhr                    watch (timepiece); also "o'clock"
+der Uhrturm                clock tower
+die Uhrzeit                time, time of day
+das Viertel                quarter
+die Zahl, die Zahlen       number, numbers
+
+bis zwei Uhr               until two o'clock
+das ist gut                very well (lit.: "that is good")
+eines Nachmittags          one (unspecified) afternoon
+ich kann... spielen        I can play
+es ist                     it is
+willst du ...?             do you want ...? (familiar form)
+
+fragen                     ask (a question) 
+spielen                    play
+zählen                     count
+
+dann                       then
+halb                       half, halfway to
+nach                       about, after
+spät                       late
+vor                        before, until
+zu                         to
+
+Pronunciation Guide >>
+
+
+== Grammatik 3-2 ~ Introduction to Nouns ==
+A noun is a fundamental part of speech, occurring in sentences in two different ways: as subjects (performers of action), or objects (recipients of action). As a generality, a noun is the name of a "person, place, or thing". Nouns are classified into proper nouns (e.g. "Janet"), common nouns (e.g. "girl"), and pronouns (e.g. "she" and "which"). A proper noun (also called proper name) is a noun which denotes a unique entity. The meaning of a proper noun, outside of what it references, is frequently arbitrary or irrelevant (for example, someone might be named Tiger Smith despite being neither a tiger nor a smith). Because of this, they are often not translated between languages, although they may be transliterated — for example, the German surname "Knödel" becomes "Knoedel" in English, as opposed to "Dumpling". Proper nouns are capitalized in English and all other languages that use the Latin alphabet; this is one way to recognize them. However, in German both proper and common nouns are capitalized (as are certain formal pronouns; see Grammatik 2-3).
+
+
+== Grammatik 3-3 ~ Gender of Nouns ==
+We have seen evidence of word gender in the pronouns we have been encountering; notably 'he', 'she', and 'it' in English and er, sie, and es in German. Just like many other languages (but not English), German has genders for nouns as well. Noun gender is indicated by the definite article, which should always be learned as part of the noun. For this reason, nouns presented in each lesson's Vokabeln include the gender appropriate definite article.    
+
+
+=== Definite Articles ===
+The definite article (bestimmter Artikel) is equivalent to an English 'the', and the three basic gender forms of definite articles in German are as follows:
+
+To say 'the book' in German, you would say das Buch, because Buch is a neuter noun. To say 'the man' in German, you would say der Mann, because Mann is a masculine noun. To say 'the woman' in German, you would say die Frau, because Frau is a feminine noun.
+Noun gender does not always derive from actual gender where gender might be applicable. For example, 'the boy' is der Junge (masculine); but 'the girl' is das Mädchen (neuter). Also, nouns that have no inherent gender are not necessarily neuter. From this lesson: 'the watch or time piece' is die Uhr ('feminine').
+Because German is generally more structured than English, it is important when learning German nouns to always learn them with their gender correct definite article; and in the Vokabeln nouns are always given with their associated definite article. That is, you must memorize the word for 'book' in German as das Buch, not simply Buch. Not just definite articles, but indefinite articles and adjectives have endings that must match the gender of the noun they precede. Using the wrong gender can alter the meaning of a German sentence, so in forming a proper sentence with Buch, you will need to know that it is a neuter noun.
+
+
+=== Indefinite Articles ===
+In addition to the definite articles—"the" in English and der-words in German—discussed above, both languages have indefinite articles (unbestimmter Artikel). Indefinite articles  precede nouns in the same way that definite articles do, but convey a general or indefinite sense.  These are "a" or "an" in English.  Thus, 'the book' or das Buch refers to a definite or specific book, whereas 'a book' or ein Buch is indefinite about which book is referred to.  Indefinite articles also have gender as shown here:
+
+Here are some examples of indefinite articles (underlined) used in German sentences:
+
+Why, you ask, are there words like einen in some sentences above—a spelling that does not appear in the gender table? The tables for both the definite and indefinite articles above are simplified at this stage, giving only articles in the nominative case (applied to words that are subjects of verbs). In the very next lesson you will start to address all the other cases in German.  However, the nominative case is the one used to signify the gender of a noun, as in our Vokabeln.
+
+
+== Vokabeln 3-2 ==
+das Buch                   book
+die Frau                   woman
+der Knödel                 dumpling
+das Mädchen                (young) girl 
+der Mann                   man
+
+lesen                      read
+
+Pronunciation Guide >>
+
+
+== Übersetzung 3-1 ==
+Translate the following sentences into German:
+
+Antworten >

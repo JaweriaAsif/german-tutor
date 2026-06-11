@@ -1,0 +1,118 @@
+== What Is a Noun? ==
+A noun is a word that can be used to refer to a person, place, thing, quality, or idea, that is, a part of speech. It can serve as the subject or object of a verb. For example, a table (ein Tisch, eine Tafel) or a computer (ein Computer). What makes nouns in German special is that they must start with a capital letter in the written language.
+
+
+== Plurals ==
+German, unlike English, has more than one way to make nouns plural, and plural form, like gender, must be memorized with every noun. 
+There are twelve different ways to form plurals in German. They are formed by affixes at the end of the word, and the umlaut of the vowel of the stem.  They are - (changing nothing); -¨; -e; -¨e; -n; -¨n; -en; -¨en; -er; -¨er; -nen (to feminine suffix -in); -s (mainly with English loan-words); adding "foreign" endings (mainly Latin words); and changing suffixes (mainly Latin words).
+When German nouns are used in the plural, their gender becomes irrelevant. The plural can almost be thought of as a gender on its own. In the plural, the definite article is always "die" when using the nominative and accusative cases. 
+When using the dative case, "den" is the definite article of all plurals. All plurals not ending in -n or -s affix an -n.
+The definite article of the plural in the genitive case is "der".
+Examples
+Nominative:
+Die alten Männer spielen Schach. The old men are playing chess.
+Accusative:
+Ich sah die alten Männer beim Schachspielen. I saw the old men as they played chess.
+Dative:
+Ich spielte mit den alten Männern Schach. I played chess with the old men.
+Genitive:
+Das Schachspiel der alten Männer war nicht sehr spannend. The old men's chess game was not very exciting.
+
+
+=== Suffixes ===
+Although gender and plural form are often arbitrary, there exist certain suffixes whose gender and plural form are regular.  They are mainly feminine.
+-ung, -heit, -keit, -schaft, -ion, and -tät
+These are all feminine endings, which are pluralized by -en.
+
+Diskussion(en)
+Discussion(s)
+Universtät(en)
+University(ies)
+-unft
+This ending is feminine and is pluralized by changing the stem vowel and adding -e
+
+Unterkunft
+Lodging
+Unterkünfte
+Lodgings
+-ik
+This ending often doesn't have a plural. When it does however, you add '-en
+
+Technik(en)
+Technique(s)
+Other
+When verb infinitives transform into nouns, they do not have a plural form.
+
+das Sprechen
+Language
+Many masculine nouns are formed by verbal stems without a suffix.  Many of these receive an umlaut in their plural form.
+
+
+== Gender ==
+German, like many other languages, gives each noun a gender: Masculine, Feminine, and Neuter. Plural nouns also act differently not only with the verb of the sentence, but the article preceding it.
+The way any particular word is classified may not be logical. 
+Examples:
+
+das Mädchen       the girl (neuter)
+die Person        the person (feminine - even when talking about a man)
+
+However, not all German Nouns are randomly allocated a gender. The following notes will apply to most nouns but not all.
+A note on Mädchen:
+This is derived from the diminutive form of Maid (old, rarely used) - Maidchen. Grammatically it is neuter, but when referenced, nowadays the logical feminine gender can take over: "Das Mädchen und ihr Hund", instead of "Das Mädchen und sein Hund".
+
+Compound nouns have the same gender as the last noun.
+
+Example: die Armbanduhr (wristwatch) (der Arm, das Band, die Uhr)
+
+
+=== Masculine ===
+There are far more masculine nouns than of either of the other genders. The masculine nominative definite article is der.
+
+
+==== Semantic Groups Which Are Masculine ====
+days              z.B. der Montag
+times of the day  z.B. der Morgen
+months            z.B. der August
+seasons           z.B. der Sommer
+compass points: Norden, Osten, Süden, Westen, Nordwesten, ...
+(male) animals      z.B. der Löwe, der Hahn, der Ochse
+alcohol**         z.B. der Wein, der Likör, der Alkohol, der Champagner
+car***            z.B. der Wagen, der Opel, der Mercedes, der BMW
+
+** However, it is das Bier, die Spirituose (because of the ending "-ose"), das Pils (because it is a beer), das Methanol (because it is a scientific term of a substance)
+*** Excepting "das Auto".
+
+Nouns meaning a male person are usually masculine. Typical endings for such nouns are -er, -iker, -or, -ar, -är, -ent, -ant, -ist, -loge, -graph, -graf, -eur, -arch.
+
+Examples (masculine): Mann, Sohn, Bub, Junge, Bruder, Vater, Enkel, Onkel, König, Lehrer, Mathematiker, Student, Arzt, Professor, Ingenieur, Demonstrant, Kommissar, Tourist, Meteorologe, Fotograf, Biograph, Monarch, Millionär
+Exceptions: die Person, das Kind, das Baby, das Opfer, die Geisel (These words can mean a male or a female person but the gender stays the same.)
+
+
+==== Words with Certain Endings ====
+Nouns ending with -ismus are always masculine: der Kommunismus, der Anglizismus, der Terrorismus
+Nouns ending with -smus or -thmus are usually masculine: der Algorithmus, der Logarithmus, der Rhythmus, der Enthusiasmus, der Sarkasmus, der Orgasmus
+
+Nouns ending with -ling that are not English words are usually masculine (if they mean a person, they can mean a male or a female person): der Flüchtling (refugee), der Lehrling (apprentice), der Liebling (darling), der Schmetterling (butterfly), der Setzling, der Zwilling
+
+Nouns ending with -or are often masculine: der Motor, der Rotor, der Faktor, der Vektor, der Prozessor, Äquator, Monitor
+Exceptions: das Labor (because it is short for das Laboratorium)
+
+Nouns ending in -en are usually masculine (but not infinitives used as nouns. They are neuter: das Rauchen, das Lachen).
+
+Examples (masculine): Kuchen (cake), Frieden (peace), Glauben (faith), Balken, Bogen (bow), Socken (sock), Brocken, Stecken, Samen, Daumen (thumb), Boden, Busen, Degen, Reigen, Faden, Hafen, Haken, Laden, Orden, Rasen, Braten, Spaten, Ballen, Barren, Batzen, Drachen, Felsen (rock), Fetzen, Funken, Garten (garden), Galgen, Gaumen, Graben, Haufen, Hopfen, Klumpen, Kasten, Karren, Besen, Schuppen, Karpfen, Krapfen, Knoten, Kolben, Korken, Kragen, Lappen, Brunnen, Rahmen, Schaden, Ofen, Magen, Zapfen, Schinken, Knochen, Pfropfen, Topfen, Regen (rain), Reifen, Streifen, Tropfen, Hoden, Loden, Fladen, Roggen, Weizen, Segen, Husten, Schnupfen, Nacken, Packen, Rücken, Zacken, Zinken, Rachen, Rechen, Rochen, Wagen
+Exceptions (neuter): Leben, Wissen, Essen, Küken, Laken, Leinen, Nomen, Becken, Examen, Fohlen, Wappen, Kissen, Eisen, Beben, Volumen, Treffen, Schreiben, Wesen, Zeichen
+
+The following groups of nouns are relatively often masculine if they do not begin with the unstressed syllable Ge-:
+Nouns ending in -el (but not stressed on the last syllable): der Vogel
+Nouns ending in -er (but not -ier): der Hamster
+
+Examples (-el, masculine): Vogel (bird), Apfel (apple), Himmel (sky, heaven), Nebel (fog), Hagel (hail), Nagel (nail), Nabel (navel), Schnabel (beak), Hebel (lever), Kübel (bucket), Löffel (spoon), Hügel (hill), Gipfel (peak), Wipfel (treetop), Schlüssel (key), Deckel (lid), Henkel (handle), Beutel (bag), Schenkel, Tempel, Zirkel, Würfel, Handel (trade), Flügel (wing), Gürtel (belt), Mantel (coat), Kegel, Ziegel, Knödel, Esel (donkey), Igel, Dackel, Pudel, Pinsel (paint brush), Titel (title), Ärmel, Muskel, Knöchel, Knorpel, Tunnel (tunnel), Artikel (article), Pegel, Pickel, Winkel (angle), Stapel, Zettel, Sessel (chair), Jubel, Trubel, Mörtel, Meißel, Kessel (kettle), Kittel, Sockel, Tümpel, Mangel, Büffel, Rüssel, Säbel, Bügel, Dübel, Egel, Engel (angel), Erpel, Pöbel
+Exceptions (-el, feminine): Schachtel (box), Schüssel (bowl), Amsel, Drossel, Wachtel, Kordel, Kurbel, Achsel, Dattel, Ampel, Insel (island), Muschel, Regel (rule), Wurzel (root), Bibel, Fabel, Gabel (fork), Nadel (needle), Nudel, Kugel, Fackel, Gondel, Kapsel, Tafel, Rodel, Orgel, Formel (formula), Geisel, Distel, Eichel, Angel
+Exceptions (-el, neuter): Segel (sail), Kabel (cable), Pendel (pendulum), Kapitel (chapter), Rätsel, Wiesel, Ziesel, Orakel, Ferkel, Übel, Paddel, Debakel, Rudel, Nickel
+Examples (-er, masculine): Acker, Ärger, Anker, Eifer, Eimer, Eiter, Hafer, Käfer, Biber, Tiger, Kater, Kader, Köder, Laser, Polster, Bagger, Becher, Bohrer, Hammer, Hamster, Bunker, Donner, Dotter, Dünger, Fächer, Falter, Fehler, Filter, Finger, Fühler, Höcker, Hocker, Hummer, Hunger, Ingwer, Jammer, Keller, Kerker, Kleber, Körper, Koffer, Krater, Kühler, Kummer, Luster, Ordner, Panzer, Puffer, Sender, Sommer, Teller, Walzer, Wecker, Winter, Zauber, Zeiger, Zucker
+Exceptions (-er, feminine): Ader, Butter, Dauer, Faser, Leiter, Feder, Feier, Leber, Mauer, Oper, Elster, Folter, Kammer, Nummer, Steuer, Trauer, Wimper, Ziffer
+Exceptions (-er, neuter): Alter, Messer, Fenster, Feuer, Futter, Wasser, Wetter, Lager, Leder, Opfer, Puder, Pulver, Ruder, Ufer, Banner, Fieber, Gatter, Gitter, Kupfer, Muster, Poster, Silber, Wunder, Zimmer
+
+Nouns that end with -pf but do not begin with Ge- are often masculine.
+
+Examples (masculine): Kopf, Zopf, Napf, Sumpf, Strumpf, Dampf, Kampf, Rumpf, Tro

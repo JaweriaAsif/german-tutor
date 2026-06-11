@@ -13,6 +13,8 @@ from __future__ import annotations
 
 import json
 import os
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 from langchain_core.tools import BaseTool, tool
@@ -22,6 +24,9 @@ from .persistence import Store
 
 _CONTENT_DIR = Path(__file__).resolve().parents[2] / "content"
 _MATERIAL_EXCERPT = 1800
+_WIKIBOOKS_API = "https://en.wikibooks.org/w/api.php"
+# Set TUTOR_LIVE_CONTENT=0 to force the offline cache (e.g. in RELAI simulations).
+_LIVE_CONTENT = os.getenv("TUTOR_LIVE_CONTENT", "1") != "0"
 
 
 def _load_content_index() -> list[dict]:
@@ -32,6 +37,57 @@ def _load_content_index() -> list[dict]:
         return json.loads(index.read_text(encoding="utf-8")).get("items", [])
     except (ValueError, OSError):
         return []
+
+
+def _live_wikibooks(topic: str) -> dict | None:
+    """Fetch the best-matching German-course page from Wikibooks live (short
+    timeout). Returns None on any failure so the caller can fall back to cache."""
+    try:
+        search = urllib.parse.urlencode({
+            "action": "query", "list": "search", "srnamespace": "0",
+            "srsearch": f"intitle:German/ {topic}", "srlimit": "5", "format": "json",
+        })
+        req = urllib.request.Request(
+            f"{_WIKIBOOKS_API}?{search}", headers={"User-Agent": "german-tutor/1.0"}
+        )
+        with urllib.request.urlopen(req, timeout=8) as r:
+            hits = json.loads(r.read())["query"]["search"]
+        title = next((h["title"] for h in hits if h["title"].startswith("German/")), None)
+        if not title:
+            return None
+        extract = urllib.parse.urlencode({
+            "action": "query", "prop": "extracts", "explaintext": "1",
+            "redirects": "1", "format": "json", "titles": title,
+        })
+        req = urllib.request.Request(
+            f"{_WIKIBOOKS_API}?{extract}", headers={"User-Agent": "german-tutor/1.0"}
+        )
+        with urllib.request.urlopen(req, timeout=8) as r:
+            page = next(iter(json.loads(r.read())["query"]["pages"].values()))
+        text = (page.get("extract") or "").strip()
+        if not text:
+            return None
+        return {
+            "title": page.get("title", title), "source": f"English Wikibooks: {title}",
+            "license": "CC BY-SA 3.0", "excerpt": text[:_MATERIAL_EXCERPT], "live": True,
+        }
+    except Exception:  # noqa: BLE001 - any network/parse error -> fall back to cache
+        return None
+
+
+def _cached_material(topic: str) -> dict:
+    """Keyword-match the locally fetched content (offline fallback)."""
+    items = _load_content_index()
+    if not items:
+        return {"available": [], "note": "No local content; run scripts/fetch_content.py."}
+    terms = [t for t in topic.lower().split() if len(t) > 2]
+    best = max(items, key=lambda it: sum((it.get("title", "") + " " + it.get("id", "")).lower().count(t) for t in terms))
+    score = sum((best.get("title", "") + " " + best.get("id", "")).lower().count(t) for t in terms)
+    if score == 0:
+        return {"available": [{"id": i["id"], "title": i["title"]} for i in items]}
+    text = (_CONTENT_DIR.parent / best["path"]).read_text(encoding="utf-8")[:_MATERIAL_EXCERPT]
+    return {"id": best["id"], "title": best["title"], "source": best["source"],
+            "license": best["license"], "excerpt": text, "live": False}
 
 
 def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
@@ -76,27 +132,17 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
 
     @tool
     def get_lesson_material(topic: str) -> str:
-        """Fetch grounded, open-licensed reference material (grammar references from
-        Wikibooks, reading texts from Project Gutenberg) for a topic. Use it to base a
-        lesson/explanation on real vetted content instead of recalling from memory.
-        Returns the best-matching excerpt plus its source and license; if nothing
-        matches, returns the list of available materials. Always keep teaching at the
-        learner's level even if the source text is denser."""
-        items = _load_content_index()
-        if not items:
-            return json.dumps({"available": [], "note": "No local content; run scripts/fetch_content.py."})
-        terms = [t for t in topic.lower().split() if len(t) > 2]
-        def score(it: dict) -> int:
-            hay = (it.get("title", "") + " " + it.get("id", "")).lower()
-            return sum(hay.count(t) for t in terms)
-        best = max(items, key=score)
-        if score(best) == 0:
-            return json.dumps({"available": [{"id": i["id"], "title": i["title"]} for i in items]})
-        text = (_CONTENT_DIR.parent / best["path"]).read_text(encoding="utf-8")[:_MATERIAL_EXCERPT]
-        return json.dumps({
-            "id": best["id"], "title": best["title"], "source": best["source"],
-            "license": best["license"], "excerpt": text,
-        })
+        """Fetch grounded, open-licensed German lesson/grammar material for a topic.
+        Tries the live Wikibooks "German" course first (real-time, always current),
+        and falls back to the local cached content if offline or rate-limited. Use it
+        to base a lesson/explanation on real vetted content instead of recalling from
+        memory. Returns the best-matching excerpt plus its source and license. Always
+        keep teaching at the learner's level even if the source text is denser."""
+        if _LIVE_CONTENT:
+            live = _live_wikibooks(topic)
+            if live is not None:
+                return json.dumps(live)
+        return json.dumps(_cached_material(topic))
 
     @tool
     def save_lesson_pointer(unit_id: str, step: int) -> str:
