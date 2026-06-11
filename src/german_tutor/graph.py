@@ -224,7 +224,13 @@ def build_tutor_graph(store: Store, learner_id: str, audio_markup: bool = False)
         agent = specialists[name]
 
         def node(state: TutorState) -> dict:
-            result = agent.invoke({"messages": state["messages"]})
+            # Raise the step budget: a lesson turn can legitimately make many tool
+            # calls (state, curriculum, material, cache, pointer, vocab, audio), and
+            # the default recursion_limit (25) can cut a turn off before its final
+            # reply — which surfaces to the user as "no answer".
+            result = agent.invoke(
+                {"messages": state["messages"]}, config={"recursion_limit": 60}
+            )
             # Return only the messages this sub-agent newly produced.
             new = result["messages"][len(state["messages"]):]
             return {"messages": new}
