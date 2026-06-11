@@ -1217,7 +1217,7 @@ wheels = [
 
 [[package]]
 name = "relai"
-version = "0.1.14"
+version = "0.1.15"
 source = { registry = "https://staging-api.relai.ai/sdk/simple/" }
 dependencies = [
     { name = "aiohttp" },
@@ -1226,7 +1226,7 @@ dependencies = [
     { name = "tenacity" },
 ]
 wheels = [
-    { url = "https://staging-api.relai.ai/sdk/files/relai-0.1.14-py3-none-any.whl" },
+    { url = "https://staging-api.relai.ai/sdk/files/relai-0.1.15-py3-none-any.whl" },
 ]
 
 [[package]]
@@ -1238,7 +1238,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "relai", specifier = "==0.1.14", index = "https://staging-api.relai.ai/sdk/simple/" }]
+requires-dist = [{ name = "relai", specifier = "==0.1.15", index = "https://staging-api.relai.ai/sdk/simple/" }]
 
 [[package]]
 name = "requests"
