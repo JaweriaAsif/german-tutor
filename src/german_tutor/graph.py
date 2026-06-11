@@ -47,6 +47,16 @@ TTS_HINT = (
     "learner wants to hear something specific, voice just that."
 )
 
+MOMENTUM = (
+    " Keep momentum. When the learner answers, or says 'continue' / 'yes' / 'next' / "
+    "'weiter' / 'ok', move straight into the next step yourself. Do NOT stop to ask "
+    "'do you want to continue?' and do NOT re-list the activity menu every turn. End "
+    "a turn only with the single concrete thing you need from the learner now (e.g. "
+    "the answer to one exercise) — not a menu of options. Offer other activities "
+    "(vocab, quiz, conversation) only when the lesson is actually finished or the "
+    "learner asks what else they can do."
+)
+
 Route = Literal[
     "placement", "lesson", "grammar", "vocab", "exercise",
     "conversation", "progress", "concierge", "offtopic",
@@ -83,7 +93,7 @@ SPECIALIST_PROMPTS: dict[str, str] = {
         "text with unexplained German, even if you say you will explain it later. "
         "If an example needs extra German words, gloss each new item immediately or "
         "replace the example with one that only uses already-explained German. Keep "
-        "the step small but not skeletal. " + LEVEL_RULE + TTS_HINT
+        "the step small but not skeletal. " + LEVEL_RULE + TTS_HINT + MOMENTUM
     ),
     "grammar": (
         "Explain the requested grammar point for the learner's level: a short rule, "
@@ -94,14 +104,14 @@ SPECIALIST_PROMPTS: dict[str, str] = {
         "Teach or review vocabulary. For new words use add_vocab (include the article "
         "for nouns, e.g. 'der Tisch'). For review, call get_due_vocab, quiz ONE card "
         "at a time, and after each answer call review_vocab with a quality 0-5 (5 = "
-        "instant recall, <3 = failed). " + LEVEL_RULE + TTS_HINT
+        "instant recall, <3 = failed). " + LEVEL_RULE + TTS_HINT + MOMENTUM
     ),
     "exercise": (
         "Generate level-appropriate exercises for the current unit. Decide each "
         "exercise's expected answer up front so grading is consistent. Present ONE "
         "exercise at a time, wait for the answer, grade it, call record_attempt and "
         "log_error as needed, give feedback, then continue. Never dump them all at "
-        "once. " + LEVEL_RULE
+        "once. " + LEVEL_RULE + MOMENTUM
     ),
     "conversation": (
         "Role-play a realistic German dialogue (café, directions, interview, ...) at "
@@ -116,9 +126,12 @@ SPECIALIST_PROMPTS: dict[str, str] = {
     ),
     "concierge": (
         "You are the friendly front desk of a German tutor. Greet the learner "
-        "(reference where they left off if returning), answer brief questions, and "
-        "offer the menu: lesson, grammar question, vocab review, quiz, conversation, "
-        "placement, or progress. Keep it short. " + LEVEL_RULE
+        "(reference where they left off if returning) and answer brief questions. "
+        "Offer the activity menu (lesson, grammar, vocab review, quiz, conversation, "
+        "placement, progress) ONLY on a first greeting or when the learner explicitly "
+        "asks what they can do — do not repeat the menu after every turn. If the "
+        "learner clearly wants to keep learning, point them straight into it rather "
+        "than re-listing options. Keep it short. " + LEVEL_RULE
     ),
 }
 
@@ -127,7 +140,9 @@ ROUTER_SYSTEM = (
     "Learner state: {state_summary}\n\n"
     "Choose exactly one route:\n"
     "- placement: unknown level, or learner wants to be placed/tested for level\n"
-    "- lesson: 'lesson', 'teach me', 'continue', 'resume', or names a topic/unit\n"
+    "- lesson: 'lesson', 'teach me', 'continue', 'resume', a topic/unit, OR a bare "
+    "affirmation/continuation ('yes', 'ok', 'next', 'weiter', 'go on', 'sure') when "
+    "a lesson is in progress\n"
     "- grammar: a grammar question or 'explain ...'\n"
     "- vocab: 'vocab', 'words', 'flashcards', 'review words'\n"
     "- exercise: 'quiz', 'exercises', 'drill', 'practice questions'\n"
