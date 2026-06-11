@@ -12,12 +12,13 @@ Two persistence layers:
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 from pathlib import Path
 
 from dotenv import load_dotenv
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langgraph.checkpoint.sqlite import SqliteSaver
 
 from .graph import build_tutor_graph
@@ -92,12 +93,35 @@ def render_audio_markers(text: str) -> tuple[str, list[Path]]:
     return rendered, paths
 
 
-def run_turn(graph, user_input: str, config: dict) -> str:
+def _turn_sources(messages, since: int) -> list[str]:
+    """Collect 'source (license)' strings from get_lesson_material tool results
+    produced in this turn (messages added after index `since`)."""
+    sources: list[str] = []
+    for msg in messages[since:]:
+        if not isinstance(msg, ToolMessage):
+            continue
+        content = msg.content if isinstance(msg.content, str) else ""
+        try:
+            data = json.loads(content)
+        except (ValueError, TypeError):
+            continue
+        if isinstance(data, dict) and data.get("source"):
+            tag = f"{data['source']}" + (f" ({data['license']})" if data.get("license") else "")
+            if tag not in sources:
+                sources.append(tag)
+    return sources
+
+
+def run_turn(graph, user_input: str, config: dict) -> tuple[str, list[str]]:
     result = graph.invoke({"messages": [HumanMessage(content=user_input)]}, config=config)
-    for msg in reversed(result["messages"]):
+    messages = result["messages"]
+    human_idxs = [i for i, m in enumerate(messages) if isinstance(m, HumanMessage)]
+    since = human_idxs[-1] if human_idxs else 0
+    sources = _turn_sources(messages, since)
+    for msg in reversed(messages):
         if isinstance(msg, AIMessage) and isinstance(msg.content, str) and msg.content.strip():
-            return msg.content
-    return "(no response)"
+            return msg.content, sources
+    return "(no response)", sources
 
 
 def chat(args: argparse.Namespace) -> int:
@@ -178,11 +202,13 @@ def chat(args: argparse.Namespace) -> int:
 
             prompt = COMMAND_PROMPTS.get(lowered, user_input)
             try:
-                reply = run_turn(graph, prompt, config)
+                reply, sources = run_turn(graph, prompt, config)
                 rendered, last_audio = render_audio_markers(reply)
                 print(f"\nTutor: {rendered}")
                 if last_audio:
                     print("  (click 🔊, or type /play N to hear a word)")
+                for src in sources:
+                    print(f"  📖 Source: {src}")
                 print()
                 conversation_log.append_round(user=user_input, assistant=reply)
             except Exception as exc:  # noqa: BLE001 - keep the REPL alive on errors

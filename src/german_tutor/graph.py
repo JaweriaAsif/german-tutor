@@ -61,7 +61,9 @@ GROUND_HINT = (
     " Ground your teaching in real material: call get_lesson_material(topic) to pull "
     "the live Wikibooks German-course text for the current grammar point/topic, and "
     "base your explanation and examples on it (adapted to the learner's level). Do "
-    "not invent grammar rules; if the material doesn't cover something, say so."
+    "not invent grammar rules; if the material doesn't cover something, say so. When "
+    "you use fetched material, briefly cite it at the end, e.g. 'Source: Wikibooks — "
+    "<title> (CC BY-SA)'."
 )
 
 Route = Literal[
