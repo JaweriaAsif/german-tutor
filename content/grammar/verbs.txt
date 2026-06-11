@@ -1,0 +1,206 @@
+== Verbs ==
+German verbs can be classified as weak or as strong. Weak verbs are very regular in their forms, whereas strong verbs change the stem vowel.
+Weak:
+
+kaufen, kaufte, gekauft
+
+Strong:
+
+singen, sang, gesungen
+
+With its Anglo-Saxon origin, this notion is also present in English.
+
+flip, flipped, flipped
+sing, sang, sung
+
+Some German verbs have weak and strong forms. This may depend on meaning:
+
+Der Botschafter wurde nach Berlin gesandt.
+Der Süddeutsche Rundfunk sendete ein Konzert aus dem Gasteig.
+
+Or on transitive vs. intransitive use:
+
+Das Hemd hing auf der Wäscheleine.
+Sie hängte das Hemd auf die Wäscheleine.
+
+
+== Strong Verbs ==
+Liste der starken und unregelmässigen Verben
+
+
+== Separable Verbs ==
+Sometimes you will run into verbs such as anrufen, aufräumen, mitkommen. These verbs are examples of Separable Prefix Verbs. When you see these kinds of verbs, it will have a preposition prefix followed by a verb. These verbs separate when they are the main verb of a sentence.
+EXAMPLES:
+I am calling the butcher.
+Ich rufe den Metzger an.
+I am trying on the boots.
+Ich probiere die Stiefel an.
+
+
+== Reflexive Verbs ==
+Reflexive Verbs are verbs involving the reflexive pronoun "sich" and its conjugations that reflect, or refer back, to the performer of the action. There are only accusative and dative reflexive pronouns.
+Accusative reflexive pronouns are used when there is no direct object. Dative reflexive pronouns are used when a direct object is present. However, when using a direct object, the possessive is not used.
+Examples:
+
+Accusative: Ich verletze mich. I injure myself.
+Dative: Ich verletze mir die Hand. I injure my hand.
+Accusative: Er hat sich verbrannt. He burned himself.
+Dative: Er hat sich den Daumen verbrannt. He burned his thumb.
+
+Notice that all reflexives are the same as the Akkusativ and Dativ Pronoun Declensions — except for 3rd Person and 2nd sg./pl. Person formal (man/sie/Sie), in which case all reflexives are sich.
+
+
+== Modals ==
+
+
+=== Dürfen ===
+Dürfen means to be allowed/permitted, may.
+
+Examples:
+
+Darf ich einen Freund zum Fest bringen? May I bring a friend to the party?
+Man darf hier nicht rauchen. One is not allowed to smoke here.
+Niemand durfte die Stadt verlassen. No one was allowed to leave the city.
+
+
+=== Können ===
+können means 'to be able, capable'. It is cognate with the English word 'can'/'could'.
+
+Examples:
+
+Ich kann das nicht tun. I can't do it.
+Wir konnten sie nicht erreichen. We could not reach them.
+
+
+=== Mögen ===
+mögen expresses a pleasure, or desire. In the present tense, it is used transitively with people or food. e.g. 'Ich mag dich' 'I like you' or 'Ich mag Erdbeeren' 'I like strawberries'. The subjunctive (of the past) expresses preference to perform the action of a subordinate clause 'Ich möchte nach Frankreich reisen' 'I would like to travel to France'. 'mögen' is cognate with the English verb 'may'/'might'.
+
+Example:
+
+Ich möchte nach Deutschland reisen. I would like to travel to Germany.
+
+(There is also a present subjunctive möge, which is very formal:
+Der König sagte: "Er möge eintreten." - The king said: "He may enter.")
+
+
+=== Müssen ===
+müssen expresses something forced on you. It is etymologically related to 'must'.
+
+Examples:
+
+Ich muss nicht arbeiten. ~ Ich brauche nicht zu arbeiten.  I don't have to work.
+Ich darf nicht arbeiten.  I must not work.
+
+Note that the negative nicht müssen is not the English must not, but rather need not or don't have/need to.
+must not translates to nicht dürfen.
+There are however some northern German uses like:
+
+Du musst das nicht tun meaning Du solltest das nicht tun.
+
+
+=== Sollen ===
+sollen expresses an obligation or duty. It is etymologically related to 'shall'.
+
+
+=== Wollen ===
+wollen means to want.
+
+
+=== Use in Perfect (and Pluperfect) Tense ===
+Although all these modals have a normal perfect:
+
+gedurft gekonnt gemocht gemusst gesollt
+
+in connection with other verbs, the infinitive form is used:
+
+Ich habe das tun dürfen - können - mögen - müssen - sollen.
+
+Wrong:
+
+Ich habe das tun gedurft - gekonnt - gemocht - gemusst - gesollt.
+
+It holds also for the verbs sehen and hören:
+
+Ich habe ihn kommen sehen - hören.
+
+
+=== Use of modal verbs as full verbs ===
+Modal verbs can be used as full verbs indicating motion. In these cases, the infinitive verb is only implied.
+
+Er muss nach Berlin. (implied: gehen or fahren) He must go to Berlin.
+
+
+== Present Tense ==
+
+
+=== Use ===
+The Present Tense is used for..
+
+The Present Tense (="das Präsens") is used to describe situations that are happening and aren't the past.
+For Ongoing Action, like I'm swimming in the pool now
+Everyday Truths, like The moon and stars will come at night.
+Future meaning, if explicitly stated, like I will run tomorrow morning
+Actions started in the past and still going on in the present I've been cleaning the house all day
+
+
+=== Progressive Forms ===
+There is a present progressive tense in colloquial spoken German. Its use is optional.
+Here is one example: 
+Ich bin am Fahren.
+(I am at the driving)
+I'm driving.
+The person to say this would be driving during the time they say this and they would continue to drive after stating this for some time.
+You nominalize the verb ("fahren" (driving) becomes "das Fahren") and add a "am".
+You can also do this with forms of the past.
+Als er kam war ich gerade am Abwaschen.
+(When he arrived i was at "the dishwashing")
+I was washing the dishes when he arrived.
+So the verb "sein" (to be) includes the information what tense he was doing what he did in.
+Here the progressive meaning is also emphasized with the word "gerade" meaning something like: I was JUST ABOUT to wash the dishes(not the same though because it means he is already doing it and not about to start).
+
+
+== Perfect Tense ==
+The Perfect Tense or das Perfekt of verbs is used to talk about things in the past which have already happened. It is sometimes referred to as "Present Perfect Tense". This can cause confusion. While the formation is similar, the meaning and usage differs.
+
+
+=== Formation ===
+As in English, the perfect tense consists of two parts. An auxiliary (Hilfsverb) and a past participle (Partizip Perfekt). Compare the examples given below with their English translations.
+
+
+=== Past participle for regular verbs ===
+The general rule is simple:
+
+There are some groups of regular verbs that slightly differ from that pattern.
+Some verbs drop the prefix ge-. Like the other regular verbs they end in -t. These are:
+1. Verbs with unseparable prefixes (be-, ent-, er-, empf-, ge-, ver-, miss-, zer-)
+Examples:
+
+2. Verbs ending in -ieren
+Examples:
+
+3. Another group is formed by verbs with separable prefixes
+With separable verbs, the prefix ge is placed between the prefix and the rest of the verb.
+Examples:
+
+Separable and inseparable verbs are distinguished by the stressed syllable:
+
+Er hat das Buch ins Chinesische übersetzt.
+Der Fährmann hat den Passagier übergesetzt (über den Fluss gesetzt).
+
+
+=== Past Participle for Irregular Verbs ===
+Irregular verbs always end in -en. The vowel can be different from the one in present tense. Look at some examples:
+
+You have to learn these forms by heart. How you can obtain the necessary information and how you should learn them is described in section tips for learning below.
+Note that irregular verbs can be combined with the same prefixes as described above. The same rules regarding the prefix ge- apply. Therefore the forms for schreiben, verschreiben and aufschreiben are geschrieben, verschrieben and aufgeschrieben respectively.
+
+
+==== Which verbs are irregular ====
+A lot of verbs that are irregular in English are irregular in German, too. Unfortunately, this is not always true. It is most likely when the German and the English verb are related (i.e. look similar).
+Examples:
+
+see:    irregular   sehen:    irregular
+buy:    irregular   kaufen:   regular
+get:    irregular   bekommen: irregular ;-)
+
+Regular verbs are much more frequent than irregular ones, but a lot of the irregular

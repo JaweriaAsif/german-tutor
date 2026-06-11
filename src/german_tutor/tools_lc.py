@@ -13,11 +13,25 @@ from __future__ import annotations
 
 import json
 import os
+from pathlib import Path
 
 from langchain_core.tools import BaseTool, tool
 
 from . import curriculum as curr
 from .persistence import Store
+
+_CONTENT_DIR = Path(__file__).resolve().parents[2] / "content"
+_MATERIAL_EXCERPT = 1800
+
+
+def _load_content_index() -> list[dict]:
+    index = _CONTENT_DIR / "index.json"
+    if not index.exists():
+        return []
+    try:
+        return json.loads(index.read_text(encoding="utf-8")).get("items", [])
+    except (ValueError, OSError):
+        return []
 
 
 def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
@@ -59,6 +73,30 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
     def get_unit_details(unit_id: str) -> str:
         """Return curriculum details (objectives, grammar, vocab theme) for a unit id."""
         return json.dumps(curr.get_unit(unit_id) or {"error": "unknown unit"})
+
+    @tool
+    def get_lesson_material(topic: str) -> str:
+        """Fetch grounded, open-licensed reference material (grammar references from
+        Wikibooks, reading texts from Project Gutenberg) for a topic. Use it to base a
+        lesson/explanation on real vetted content instead of recalling from memory.
+        Returns the best-matching excerpt plus its source and license; if nothing
+        matches, returns the list of available materials. Always keep teaching at the
+        learner's level even if the source text is denser."""
+        items = _load_content_index()
+        if not items:
+            return json.dumps({"available": [], "note": "No local content; run scripts/fetch_content.py."})
+        terms = [t for t in topic.lower().split() if len(t) > 2]
+        def score(it: dict) -> int:
+            hay = (it.get("title", "") + " " + it.get("id", "")).lower()
+            return sum(hay.count(t) for t in terms)
+        best = max(items, key=score)
+        if score(best) == 0:
+            return json.dumps({"available": [{"id": i["id"], "title": i["title"]} for i in items]})
+        text = (_CONTENT_DIR.parent / best["path"]).read_text(encoding="utf-8")[:_MATERIAL_EXCERPT]
+        return json.dumps({
+            "id": best["id"], "title": best["title"], "source": best["source"],
+            "license": best["license"], "excerpt": text,
+        })
 
     @tool
     def save_lesson_pointer(unit_id: str, step: int) -> str:
@@ -145,12 +183,13 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
     return {
         "state": state,
         "placement": [*state, set_level],
-        "grammar": [*state, speak_german],
+        "grammar": [*state, get_lesson_material, speak_german],
         "vocab": [*state, add_vocab, get_due_vocab, review_vocab, log_error, speak_german],
         "exercise": [*state, record_attempt, log_error],
         "lesson": [
-            *state, get_cached_lesson, cache_lesson, save_lesson_pointer,
-            add_vocab, record_attempt, log_error, update_mastery, speak_german,
+            *state, get_lesson_material, get_cached_lesson, cache_lesson,
+            save_lesson_pointer, add_vocab, record_attempt, log_error,
+            update_mastery, speak_german,
         ],
         "conversation": [*state, log_error, speak_german],
         "progress": [*state, update_mastery, log_session_summary],

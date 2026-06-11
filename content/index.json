@@ -1,0 +1,29 @@
+{
+  "schema": "german_tutor.content.v1",
+  "items": [
+    {
+      "id": "grammar/cases",
+      "type": "grammar",
+      "title": "German/Grammar/Cases",
+      "source": "English Wikibooks: German/Grammar/Cases",
+      "license": "CC BY-SA 3.0",
+      "path": "content/grammar/cases.txt"
+    },
+    {
+      "id": "grammar/verbs",
+      "type": "grammar",
+      "title": "German/Grammar/Verbs",
+      "source": "English Wikibooks: German/Grammar/Verbs",
+      "license": "CC BY-SA 3.0",
+      "path": "content/grammar/verbs.txt"
+    },
+    {
+      "id": "grammar/pronouns",
+      "type": "grammar",
+      "title": "German/Grammar/Pronouns",
+      "source": "English Wikibooks: German/Grammar/Pronouns",
+      "license": "CC BY-SA 3.0",
+      "path": "content/grammar/pronouns.txt"
+    }
+  ]
+}

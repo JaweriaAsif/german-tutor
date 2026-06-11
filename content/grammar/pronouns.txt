@@ -1,0 +1,48 @@
+Note: The possessive is not a case of the personal pronoun; it's a possessive determiner, called possessive adjective. This table shows the possessive adjective's stem, which is declined as an ein- word (that is, like the indefinite article "ein").  
+The genitive case indicates possession or association, and is equivalent to, and replaces, the English word "of".  "Des" and "der" (do not confuse with masculine singular nominative) mean "of the"; "eines" and "einer" mean "of a" / "of an"; and "der Sohn guten Weins" means "the son of good wine" (no article, M, Gen strong adjective).  Strict replacement of the genitive case with the word "of" maintains the word-order of the German nominal phrase: possessed - possessor (in genitive).  The genitive case also replaces "'s" in English, though reversing the word order (possessed then possessor, vs. English: possessor then possessed).  German itself also uses an "s" (though without the apostrophe) to indicate possession, in the same word order as English.  It is used mainly with proper nouns, such as "Goethes Heimat", as well as for compounding words.
+Standard genitive constructions are used with nouns and modifiers of nouns such as articles and adjectives, and the inflection they receive implies possession.  The first noun may be in any case and may occur in any part of the sentence; the second noun, which possesses the first noun, immediately follows the first noun, and is in the genitive case.  The noun in the genitive case need not have any modifiers - e.g., Heimat Goethes, Heimat Katerina, which mean the homeland of Goethe and Katerina, respectively - though such constructions can be cumbersome and ambiguous.
+Proper treatment of the genitive case, including all of the declensions, is found in another part of this book.
+German pronouns have genitive forms, but they are used only rarely nowadays, mostly in archaic or formal German. In many cases, a preposition can be added to allow a different case to be used.
+
+Ich erinnere mich ihrer. (I remember her)
+Also possible: Ich erinnere mich an sie.
+
+Wir gedachten seiner. (We thought of him)
+Also possible: Wir dachten an ihn.
+
+Herr, erbarme dich unser! (Lord, have mercy upon us)
+Also possible: Herr, erbarme dich über uns.
+
+The possessive pronouns (mein-, dein-, unser-, etc.) are almost identical in form to the genitive pronouns but they directly modify their attribute and could be conceived of as adjectives, though they decline differently. Alternatively, one could think of possessive pronouns, for example, "mein-", as replacing the phrase, "of me".  Directly translated, "mein-" means "mine" in English.
+Examples:
+
+I want the teacher's book. Let's rewrite this as: I want the book of the teacher.
+-Ich will das Buch des Lehrers (der Lehrerin).
+
+--The genitive case here is masculine (feminine) singular, inflecting the definite article (der/die inflected to des/der) as well as the noun (Lehrer [+s], but not Lehrerin, which doesn't change because it is feminine).
+
+Without his friend's car, we cannot go home.
+-Ohne den Wagen seines Freundes können wir nicht nach Hause fahren.
+
+--Here, two possessive relationships are mentioned.  The car belongs to the friend, and the friend belongs to "him".  For illustrative purposes, one could conceivably rewrite the prepositional phrase as "without the car (accusative case) of the friend of him".  German's rendering is far less awkward.
+
+The wall of the building is old and brown.
+-Die Wand des Gebäudes ist alt und braun.
+
+--As in the first example, the genitive case here is in the neuter singular, and inflects the definite article and the noun (M,N add +s/+es in the genitive case).
+
+
+= Comparison of Pronouns to other Parts of Speech =
+Despite the difficulty many people have in learning German declensions, case endings in German correspond to each other to a considerable degree.  Specifically, the pronouns bear an obvious resemblance to their parent direct articles.  Learning the corresponding third-person declensions side by side allows some people to comprehend the declension pattern more easily. 
+As discussed above, possessive pronouns replace the genitive case for pronouns.  In this table, they will be placed where the genitive case is, so that their similarities to other parts of speech that actually are in the genitive case can become clear.
+German is very rigorous in its use of gender, and will use the pronoun corresponding to the gender of the referential noun, regardless of whether the noun being referenced is a person (unlike English, which uses "it" for everything not a person or other entities (animals, ships) in certain contexts).  Der Liberalismus will be referred to as "er", or "he", whereas "das Mädchen" would be "es", or "it".  Many English speakers have trouble with this, especially in spoken language.  Mastery is nonetheless possible with a proper understanding of German declension, use of a few rules of thumb (for example, nouns ending in "-chen" are usually neuter), and a considerable amount of practice.
+
+N.B.(1) The use of "wessen" is considered old-fashioned, though most Germans would find it endearing to hear a non-native speaker use the word.  One is encouraged to use the "gehören + dativ (wem?)" construction, which means "to belong to someone (whom?)".
+N.B.(2) The dative plural.  Except for words whose plural form adds an "-s" (mainly loan words), and words whose plural form already ends in "-n"/"-en", all nouns add an "-n/-en" in the dative plural.  Like the s's added to masculine and neuter nouns in the genitive, this is a remnant from when German inflected all of its nouns. Other languages based on declension, such as Russian and Latin, retain that characteristic.  Sometimes one will notice an "-e" after masculine and neuter nouns in the dative case, such as the dedication on the Reichstag building - "Dem deutschen Volke", "for the German People".  
+This nominal declension is reflected in the dative plural pronoun (to/for them), "ihnen", instead of "ihn" (masculine, accusative).  For example, 
+
+Helga: Können Sie bitte meinen Brüdern helfen?
+Olga: Natürlich, aber ich kann ihnen leider nur nach zwei Tagen helfen.
+Helga: Unsere Leben gehen trotzdem weiter.
+
+Make a point of studying and getting used to the dative plural.
