@@ -16,6 +16,7 @@ import os
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from typing import Any
 
 from langchain_core.tools import BaseTool, tool
 
@@ -93,6 +94,164 @@ def _cached_material(topic: str) -> dict:
 def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
     """Return tool groupings keyed by specialist role."""
 
+    def _normalize_examples(raw_examples: Any) -> list[dict[str, str]]:
+        normalized: list[dict[str, str]] = []
+        if not isinstance(raw_examples, list):
+            return normalized
+        for ex in raw_examples:
+            if not isinstance(ex, dict):
+                continue
+            de = str(ex.get("de") or "").strip()
+            gloss = str(ex.get("gloss") or ex.get("en") or "").strip()
+            if de and gloss:
+                normalized.append({"de": de, "gloss": gloss})
+        return normalized
+
+    def _normalize_micro_vocabulary(raw_vocab: Any) -> list[dict[str, str]]:
+        normalized: list[dict[str, str]] = []
+        if not isinstance(raw_vocab, list):
+            return normalized
+        for item in raw_vocab:
+            if isinstance(item, dict):
+                de = str(item.get("de") or item.get("term") or item.get("lemma") or "").strip()
+                gloss = str(item.get("gloss") or item.get("en") or "").strip()
+            else:
+                de = ""
+                gloss = ""
+            if de and gloss:
+                normalized.append({"de": de, "gloss": gloss})
+        return normalized
+
+    def _normalize_action(step_type: str, content: dict[str, Any]) -> None:
+        practice = content.get("practice")
+        has_practice = isinstance(practice, dict) and (
+            str(practice.get("prompt") or "").strip()
+            or str(practice.get("expected_answer") or "").strip()
+        )
+        raw_check = str(content.get("check_understanding") or "").strip()
+        if step_type == "checkpoint":
+            if has_practice:
+                content.pop("check_understanding", None)
+            elif raw_check:
+                content.pop("practice", None)
+        elif step_type in {"teach", "intro_teach"}:
+            content.pop("practice", None)
+
+    def _normalize_lesson_payload(unit_id: str, lesson_json: str) -> str:
+        """Keep cached lessons structurally rich enough for deterministic resume."""
+        try:
+            payload = json.loads(lesson_json)
+        except (TypeError, ValueError):
+            return lesson_json
+        if not isinstance(payload, dict):
+            return lesson_json
+
+        unit = curr.get_unit(unit_id) or {}
+        objective = str(payload.get("lesson_objective") or "").strip()
+        if not objective:
+            can_do = str(unit.get("can_do") or "").strip()
+            title = str(payload.get("title") or unit.get("title") or unit_id).strip()
+            payload["lesson_objective"] = (
+                f"Today you will learn to {can_do[0].lower() + can_do[1:]}"
+                if can_do
+                else f"Today you will learn the core skill in {title}."
+            )
+
+        steps = payload.get("steps")
+        if isinstance(steps, list):
+            for step in steps:
+                if not isinstance(step, dict):
+                    continue
+                content = step.get("content")
+                if not isinstance(content, dict):
+                    continue
+                step_type = str(step.get("type") or step.get("kind") or "")
+                focus = str(step.get("focus") or step.get("title") or "this point").strip()
+                examples = content.get("examples")
+                normalized_examples = _normalize_examples(examples)
+                if normalized_examples:
+                    content["examples"] = normalized_examples
+                if step_type in {"teach", "intro_teach", "checkpoint"}:
+                    explanation = str(
+                        content.get("beginner_safe_explanation")
+                        or step.get("beginner_safe_explanation")
+                        or ""
+                    ).strip()
+                    if not explanation:
+                        content["beginner_safe_explanation"] = (
+                            f"In this step, use {focus.lower()} in one small beginner pattern."
+                        )
+                    scope = str(content.get("pattern_scope") or step.get("pattern_scope") or "").strip()
+                    if not scope:
+                        content["pattern_scope"] = (
+                            f"For this lesson, focus on {focus.lower()} as a useful starter pattern, "
+                            "not as a rule for every situation."
+                        )
+                    micro_vocabulary = _normalize_micro_vocabulary(
+                        content.get("micro_vocabulary") or step.get("micro_vocabulary")
+                    )
+                    if micro_vocabulary:
+                        content["micro_vocabulary"] = micro_vocabulary
+                    elif normalized_examples:
+                        content["micro_vocabulary"] = [
+                            {"de": ex["de"], "gloss": ex["gloss"]} for ex in normalized_examples[:2]
+                        ]
+                    success_feedback = str(
+                        content.get("success_feedback") or step.get("success_feedback") or ""
+                    ).strip()
+                    if not success_feedback:
+                        content["success_feedback"] = (
+                            f"If the learner gets {focus.lower()} right, name the exact German words "
+                            "they matched correctly before moving on."
+                        )
+                    advancement_note = str(
+                        content.get("advancement_note") or step.get("advancement_note") or ""
+                    ).strip()
+                    if not advancement_note:
+                        content["advancement_note"] = (
+                            "Before the next point, briefly confirm what the learner just showed "
+                            "they can do in this step."
+                        )
+                if step_type in {"teach", "intro_teach", "checkpoint"} and not str(
+                    step.get("check_understanding") or content.get("check_understanding") or ""
+                ).strip():
+                    content["check_understanding"] = f"Do you understand {focus.lower()}?"
+                practice = content.get("practice")
+                if isinstance(practice, dict):
+                    expected = str(practice.get("expected_answer") or "").strip()
+                    if expected:
+                        guidance = str(
+                            practice.get("correction_guidance")
+                            or practice.get("likely_mistakes")
+                            or ""
+                        ).strip()
+                        if not guidance:
+                            practice["correction_guidance"] = (
+                                "If the learner is partly right, show the full model answer, "
+                                "name the missing or incorrect word, and ask for one retry."
+                            )
+                elif step_type in {"checkpoint", "exercise"}:
+                    prompt = str(content.get("prompt") or step.get("prompt") or "").strip()
+                    expected = str(content.get("expected_answer") or step.get("expected_answer") or "").strip()
+                    if prompt or expected:
+                        content["practice"] = {
+                            "prompt": prompt or f"Try one short answer for {focus.lower()}.",
+                            "expected_answer": expected or "",
+                            "correction_guidance": (
+                                "If the learner answers incorrectly or partially, give the corrected "
+                                "German, briefly explain the exact fix, and ask for one retry."
+                            ),
+                        }
+                if step_type in {"teach", "intro_teach", "checkpoint"} and not content.get("examples"):
+                    content["examples"] = [
+                        {
+                            "de": f"{focus} (German example needed)",
+                            "gloss": "Add the English gloss for this German example before teaching.",
+                        }
+                    ]
+                _normalize_action(step_type, content)
+        return json.dumps(payload)
+
     @tool
     def get_learner_state() -> str:
         """Return the learner's level, lesson pointer, progress, due-vocab count and weak spots."""
@@ -153,7 +312,7 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
     @tool
     def cache_lesson(unit_id: str, lesson_json: str) -> str:
         """Persist a generated lesson (as JSON) so resuming shows the identical lesson."""
-        store.cache_lesson(learner_id, unit_id, lesson_json)
+        store.cache_lesson(learner_id, unit_id, _normalize_lesson_payload(unit_id, lesson_json))
         return json.dumps({"ok": True})
 
     @tool
