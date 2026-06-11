@@ -24,3 +24,6 @@ __pycache__/
 
 # RELAI local files
 .relai/memory
+
+# conversation logs
+logs/

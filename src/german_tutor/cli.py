@@ -21,6 +21,7 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.checkpoint.sqlite import SqliteSaver
 
 from .graph import build_tutor_graph
+from .logging import ConversationLog, next_numbered_log_file
 from .persistence import DEFAULT_DB_PATH, Store
 from .tts import play, synthesize, tts_available
 
@@ -112,6 +113,9 @@ def chat(args: argparse.Namespace) -> int:
 
     Path(CHECKPOINT_DB).parent.mkdir(parents=True, exist_ok=True)
 
+    log_path = Path(args.log_file) if args.log_file else next_numbered_log_file()
+    conversation_log = ConversationLog(log_path, learner_id=learner_id)
+
     with SqliteSaver.from_conn_string(CHECKPOINT_DB) as checkpointer:
         graph = build_tutor_graph(store, learner_id, audio_markup=True).compile(
             checkpointer=checkpointer
@@ -119,6 +123,7 @@ def chat(args: argparse.Namespace) -> int:
 
         print("Deutsch-Tutor — CEFR A1-B2 German learning (LangGraph)")
         print(f"Learner: {learner_id}")
+        print(f"Log: {log_path}")
         if store.is_returning(learner_id):
             print(f"Willkommen zurück! {store.welcome_back(learner_id)}")
         else:
@@ -179,8 +184,10 @@ def chat(args: argparse.Namespace) -> int:
                 if last_audio:
                     print("  (click 🔊, or type /play N to hear a word)")
                 print()
+                conversation_log.append_round(user=user_input, assistant=reply)
             except Exception as exc:  # noqa: BLE001 - keep the REPL alive on errors
                 print(f"\n[error] {exc}\n")
+                conversation_log.append_round(user=user_input, assistant=None)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -195,6 +202,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--db",
         default=os.getenv("TUTOR_DB", str(DEFAULT_DB_PATH)),
         help="Path to the progress SQLite database.",
+    )
+    parser.add_argument(
+        "--log-file",
+        default=os.getenv("TUTOR_LOG_FILE"),
+        help="Conversation log path. Defaults to the next logs/conversation-NNN.json.",
     )
     return parser
 

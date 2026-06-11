@@ -2,7 +2,7 @@
 
 import json
 
-from relai import FixedInput, FixedTurn, LLMJudgeEvaluator, ModelSpec, RELAIEnvironment
+from relai import LLMJudgeEvaluator, ModelSpec, PersonaInput, RELAIEnvironment
 
 
 MODEL = ModelSpec(name="gpt-5.4")
@@ -97,14 +97,22 @@ environment = RELAIEnvironment(
     name="Lesson Continues After Answers",
     description="Checks that after the learner answers a couple of lesson questions in a row, the tutor advances to the next step instead of stopping to ask 'do you want to continue?' or re-listing the menu.",
     tags=TAGS,
-    input=FixedInput(
-        turns=[
-            FixedTurn(content="/lesson Start my first lesson and teach me one small step at a time."),
-            FixedTurn(content="Hallo!"),
-            FixedTurn(content="Ich heiße Anna."),
-            FixedTurn(content="Guten Tag!"),
-            FixedTurn(content="Ich komme aus Kanada."),
-        ]
+    input=PersonaInput(
+        persona=(
+            "An eager absolute-beginner German learner taking their very first lesson. "
+            "Cooperative and a little unsure, but always tries to answer whatever the "
+            "tutor asks with a short attempt in German."
+        ),
+        intent=(
+            "Work through the lesson by answering each question the tutor asks, one at a "
+            "time, for several questions in a row. Always give a brief German answer (or "
+            "a short 'next'/'weiter' to move on); never ask to stop or change activity. "
+            "The point is to see whether the tutor keeps presenting the next question or "
+            "instead stalls by asking 'do you want to continue?' or re-listing the menu."
+        ),
+        seed_message="/lesson Start my first lesson and teach me one small step at a time.",
+        max_turns=6,
+        model=MODEL,
     ),
     mocks={
         "set_level": mock_set_level,

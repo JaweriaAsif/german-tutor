@@ -24,6 +24,7 @@ from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
 
 from ..graph import build_tutor_graph
+from ..logging import ConversationLog, next_numbered_log_file
 from ..persistence import DEFAULT_DB_PATH, Store
 from ..tts import synthesize, tts_available
 
@@ -60,8 +61,18 @@ async def lifespan(app: FastAPI):
         app.state.store = store
         app.state.saver = saver
         app.state.graphs = {}  # learner_id -> compiled graph (cached)
+        app.state.logs = {}    # learner_id -> ConversationLog (one file per learner)
         yield
     store.close()
+
+
+def _log_for(learner_id: str) -> ConversationLog:
+    logs = app.state.logs
+    if learner_id not in logs:
+        path = next_numbered_log_file()
+        logs[learner_id] = ConversationLog(path, learner_id=learner_id)
+        print(f"[web] logging learner '{learner_id}' to {path}")
+    return logs[learner_id]
 
 
 app = FastAPI(title="German Tutor", lifespan=lifespan)
@@ -93,6 +104,7 @@ async def chat(req: ChatRequest):
         raise HTTPException(500, "OPENAI_API_KEY is not set on the server.")
     message = COMMAND_PROMPTS.get(req.message.strip().lower(), req.message)
     reply = await run_in_threadpool(_run_turn, req.learner_id, message)
+    _log_for(req.learner_id).append_round(user=req.message, assistant=reply)
     return ChatResponse(reply=reply)
 
 
