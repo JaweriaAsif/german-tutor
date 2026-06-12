@@ -122,6 +122,16 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
                 normalized.append({"de": de, "gloss": gloss})
         return normalized
 
+    def _normalize_string_list(raw_items: Any) -> list[str]:
+        normalized: list[str] = []
+        if not isinstance(raw_items, list):
+            return normalized
+        for item in raw_items:
+            text = str(item or "").strip()
+            if text:
+                normalized.append(text)
+        return normalized
+
     def _normalize_action(step_type: str, content: dict[str, Any]) -> None:
         practice = content.get("practice")
         has_practice = isinstance(practice, dict) and (
@@ -212,6 +222,32 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
                             "Before the next point, briefly confirm what the learner just showed "
                             "they can do in this step."
                         )
+                    contrast_target = str(
+                        content.get("contrast_target") or step.get("contrast_target") or ""
+                    ).strip()
+                    if contrast_target:
+                        content["contrast_target"] = contrast_target
+                    elif "distinction" in str(content.get("check_understanding") or "").lower():
+                        content["contrast_target"] = (
+                            f"Clarify the contrast inside {focus.lower()} before giving full credit."
+                        )
+                    required_glossed_example = content.get("required_glossed_example")
+                    if isinstance(required_glossed_example, dict):
+                        req_examples = _normalize_examples([required_glossed_example])
+                        if req_examples:
+                            content["required_glossed_example"] = req_examples[0]
+                    elif normalized_examples:
+                        content["required_glossed_example"] = normalized_examples[0]
+                    success_criteria = _normalize_string_list(
+                        content.get("success_criteria") or step.get("success_criteria")
+                    )
+                    if success_criteria:
+                        content["success_criteria"] = success_criteria
+                    elif step_type == "checkpoint":
+                        content["success_criteria"] = [
+                            "Confirm the learner used or identified the full target pattern.",
+                            "Mention the exact German words that made the answer correct.",
+                        ]
                 if step_type in {"teach", "intro_teach", "checkpoint"} and not str(
                     step.get("check_understanding") or content.get("check_understanding") or ""
                 ).strip():
@@ -230,6 +266,20 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
                                 "If the learner is partly right, show the full model answer, "
                                 "name the missing or incorrect word, and ask for one retry."
                             )
+                    partial_credit_guidance = str(
+                        practice.get("partial_credit_guidance")
+                        or content.get("partial_credit_guidance")
+                        or step.get("partial_credit_guidance")
+                        or ""
+                    ).strip()
+                    if partial_credit_guidance:
+                        practice["partial_credit_guidance"] = partial_credit_guidance
+                    elif content.get("contrast_target"):
+                        practice["partial_credit_guidance"] = (
+                            "If the learner answers only one side of the contrast, acknowledge the "
+                            "correct part, then state the missing distinction before deciding whether "
+                            "to retry or advance."
+                        )
                 elif step_type in {"checkpoint", "exercise"}:
                     prompt = str(content.get("prompt") or step.get("prompt") or "").strip()
                     expected = str(content.get("expected_answer") or step.get("expected_answer") or "").strip()
@@ -242,6 +292,11 @@ def make_tools(store: Store, learner_id: str) -> dict[str, list[BaseTool]]:
                                 "German, briefly explain the exact fix, and ask for one retry."
                             ),
                         }
+                        if content.get("contrast_target"):
+                            content["practice"]["partial_credit_guidance"] = (
+                                "If the learner only answers part of the contrast, explain which side "
+                                "they got right and which contrast still needs to be named."
+                            )
                 if step_type in {"teach", "intro_teach", "checkpoint"} and not content.get("examples"):
                     content["examples"] = [
                         {
